@@ -1,0 +1,36 @@
+.example3 {
+    display:inline-block;   
+    position:relative;
+	cursor:pointer;
+}
+.example3 .example_text {
+    display:block;
+    position:absolute;
+    left:1;
+	top:0.01;
+    bottom:0;
+    width:100%;
+    box-sizing:border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box; 
+    cursor:pointer;
+    color:#fff;
+    
+    padding:10px;
+    
+ 
+     
+}
+.example3 h6 {
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:18px;
+}
+.example3 span {
+    font-size:16px; 
+	color:#ff0000;
+	text-decoration:none;
+	font-weight:bold;
+	text-shadow: #fff 1px 0px, #fff 1px 1px, #fff 0px 1px, #fff -1px 1px, #fff -1px 0px, #fff -1px -1px, #fff 0px -1px, #fff 1px -1px;
+
+}
