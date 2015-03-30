@@ -15,6 +15,7 @@
             $_SESSION['is_personal']=true;
 			$_SESSION['name']=$result['name'];
 			$_SESSION['id']=$result['id'];
+			//$url = $_SESSION['url'];
 			header("Location:index.php");
 			exit;
 		}
