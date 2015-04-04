@@ -1,7 +1,7 @@
 <?php
 
 $year = date('Y');
-$month = "02";
+$month = "03";
 $day = date('t');
 
 function cmp($a, $b) {
@@ -128,31 +128,42 @@ foreach ($specs as $ruk){
 	if ($ruk['head']){
 		$ruk_id = $ruk['id'];
 		$ruk_id_new = $ruk_id."a";
-		$ruk_pros = $ctrl[$ruk_id]['days_pros'];
+		$sort = $ruk['id_dep'].$ruk['weight'];
+		if(isset($ctrl[$ruk_id])){
+			$dep_pros = $ctrl[$ruk_id]['days_pros'];
+			$ruk_pros = $ctrl[$ruk_id]['days_pros'];
+			$total = $ctrl[$ruk_id]['total'];
+			$dead_ctrl = $ctrl[$ruk_id]['dead_ctrl'];
+			$c = $ctrl[$ruk_id]['ctrl'];
+		}
+		else {
+			$ruk_pros = 0;
+			$dep_pros = 0;
+			$total = 0;
+			$dead_ctrl = 0;
+			$c = 0;
+		}
 		$count = 1;
-		$total = $ctrl[$ruk_id]['total'];
-		$dead_ctrl = $ctrl[$ruk_id]['dead_ctrl'];
-		$c = $ctrl[$ruk_id]['ctrl'];
 
 		foreach ($specs as $spec) {
 			$id = $spec['id'];
 			if ($ruk['id_dep'] == $spec['id_dep'] and $ruk['id'] != $spec['id'] and isset($ctrl[$id])){
 				$spec_id = $spec['id'];
 				$count++;
-				$ruk_pros = $ruk_pros + $ctrl[$spec_id]['days_pros'];
+				$dep_pros = $dep_pros + $ctrl[$spec_id]['days_pros'];
 				$total = $total + $ctrl[$spec_id]['total'];
 				$dead_ctrl = $dead_ctrl + $ctrl[$spec_id]['dead_ctrl'];
 				$c = $c + $ctrl[$spec_id]['ctrl'];
 			}
 		}
-		$ruk_pros = round($ruk_pros/$count,2);
-		$ctrl[$ruk_id_new]['days_pros'] = $ctrl[$ruk_id]['days_pros'] + $ruk_pros ;
+		$dep_pros = round($dep_pros/$count,2);
+		$ctrl[$ruk_id_new]['days_pros'] = $ruk_pros + $dep_pros ;
 		$ctrl[$ruk_id_new]['total'] = $total;
 		$ctrl[$ruk_id_new]['dead_ctrl'] = $dead_ctrl;
 		$ctrl[$ruk_id_new]['ctrl'] = $c;
 		$ctrl[$ruk_id_new]['name'] = $ruk['name']." общ.";
-		$ctrl[$ruk_id_new]['sort'] = $ctrl[$ruk_id]['sort'];
-		$ctrl[$ruk_id_new]['id'] = $ctrl[$ruk_id]['id'];
+		$ctrl[$ruk_id_new]['sort'] = $sort;
+		$ctrl[$ruk_id_new]['id'] = $ruk_id;
 		
 	}
 }
@@ -193,11 +204,14 @@ foreach ($ctrl as $c){
 	//полученное значение округляем до сотых
 	echo "<td>";
 	$percent = round($c['days_pros']*100/date('t',mktime(1,1,1,$month,1,$year)),2);
+	if ($percent > 100) $percent = 100;
 	echo $percent;
 	echo "</td>";
 	
 	echo "<td>";
-	echo round((100 - $percent)*35.83/100,2);
+	$premium = round((100 - $percent)*35.83/100,2);
+	if ($premium < 0) $premium = 0;
+	echo $premium;
 	echo "</td>";
 	
 	echo "</tr>";
