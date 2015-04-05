@@ -1,6 +1,6 @@
 <?php
 header('Content-type: text/html; charset=utf-8');
-include('bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'bd.php');
 include('checkauth.php');
 function RGBToHex($r, $g, $b) {
 	//String padding bug found and the solution put forth by Pete Williams (http://snipplr.com/users/PeteW)

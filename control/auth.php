@@ -5,7 +5,7 @@
          header('HTTP/1.0 401 Unauthorized');
          exit;  } 
         else {
-		include('bd.php');
+		include($_SERVER['DOCUMENT_ROOT'].'bd.php');
         $user = $_SERVER['PHP_AUTH_USER'];
         $pwd = $_SERVER['PHP_AUTH_PW'];    
         $query = "SELECT password,id,name FROM name WHERE login='$user'";

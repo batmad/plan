@@ -1,6 +1,6 @@
 <?php
 header('Content-type: text/html; charset=utf-8');
-include('bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'bd.php');
 //include('checkauth.php');
 $date = date('U',mktime(0,0,0,2,12,2014));
 echo $date;

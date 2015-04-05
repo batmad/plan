@@ -1,6 +1,6 @@
 <?php
 // Include the PHPWord.php, all other classes were loaded by an autoloader
-include('bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'bd.php');
 include('function.php');
 //include('checkauth.php');
 if (isset($_POST) && !empty($_POST)){

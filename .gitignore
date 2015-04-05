@@ -1,5 +1,6 @@
 bd.php
 bd_sakha.gov.ru.php
+const.php
 vote/bd.php
 control/admin/bd_sakha.gov.ru.php
 control/admin/bd.php

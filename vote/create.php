@@ -1,5 +1,5 @@
 <?php
-include("bd.php");
+include($_SERVER['DOCUMENT_ROOT'].'bd.php');
 
 if (isset($_POST) && !empty($_POST)){
 	$name= $_POST['name'];

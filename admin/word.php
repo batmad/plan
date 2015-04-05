@@ -1,6 +1,6 @@
 <?php
 // Include the PHPWord.php, all other classes were loaded by an autoloader
-include('bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'bd.php');
 //include('checkauth.php');
 require_once 'PHPWord.php';
 
@@ -104,7 +104,7 @@ foreach ($ruks as $ruk){
 // At least write the document to webspace:
 $objWriter = PHPWord_IOFactory::createWriter($PHPWord, 'Word2007');
 //$objWriter->save('/home/samba/tranzit/helloWorld.docx');
-$objWriter->save('/var/www/plan/admin/download/plan.docx');
+$objWriter->save($_SERVER['DOCUMENT_ROOT'].'/admin/download/plan.docx');
 
-header('Location:http://10.50.10.100/admin/download/plan.docx');
+header("Location:".$_SERVER[DOCUMENT_ROOT]."/admin/download/plan.docx");
 ?>

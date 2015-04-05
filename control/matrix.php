@@ -1,7 +1,7 @@
 <?php
 
 $_SESSION['url'] = "matrix.php";
-include('bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'bd.php');
 include('checkauth.php');
 $id = $_SESSION['id'];
 

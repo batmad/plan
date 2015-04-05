@@ -15,7 +15,7 @@ $_SESSION['descr'] = '';
 
 
 header('Content-type: text/html; charset=utf-8');
-include('bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'bd.php');
 echo "<a href='/control/admin'><img src='/img/previous.png' title='Вернуться обратно'></a><br/><br/>";
 
 

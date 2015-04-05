@@ -1,5 +1,5 @@
 <?php
-include("bd.php");
+include($_SERVER['DOCUMENT_ROOT'].'bd.php');
 echo "<a href='/'><img src='/img/previous.png' title='Вернуться обратно'></a><br/><br/>";
 
 $query_names = "SELECT name,id FROM poll ORDER BY `id` DESC LIMIT 1";

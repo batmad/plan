@@ -70,7 +70,7 @@
 <?php
 $_SESSION['analytics'] = true;
 header('Content-type: text/html; charset=utf-8');
-include('bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'bd.php');
 
 $current_date = date('d-m-Y');
 		

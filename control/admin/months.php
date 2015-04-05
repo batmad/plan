@@ -2,7 +2,7 @@
 
 echo "<a href='index.php'><img src='/img/previous.png' title='Вернуться обратно'></a><br/><br/>";
 header('Content-type: text/html; charset=utf-8');
-include('bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'bd.php');
 include('checkauth.php');
 
 $_SESSION['search'] = false;

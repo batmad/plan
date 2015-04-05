@@ -5,7 +5,7 @@
 <body>
 <?php
 header('Content-type: text/html; charset=utf-8');
-include('bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'bd.php');
 echo "<br/><a href='http://10.50.10.100/'><img src='/img/previous.png' title='Вернуться обратно'></a>";
 echo "<br/>";
 echo "<br/>";

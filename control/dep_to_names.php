@@ -1,5 +1,5 @@
 <?php
-include('bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'bd.php');
 $d = $_POST["depSelOpt"];
 
 $query = "SELECT name,id FROM name WHERE id_dep='$d'";

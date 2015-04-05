@@ -1,7 +1,7 @@
 <?php
 mb_internal_encoding("UTF-8");
 header('Content-type: text/html; charset=utf-8');
-include('bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'bd.php');
 include('checkauth.php');
 
 if (isset($_POST) && !empty($_POST)){

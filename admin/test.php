@@ -1,6 +1,6 @@
 <?php
 header('Content-type: text/html; charset=utf-8');
-include('bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'bd.php');
 //include('checkauth.php');
 echo password_hash('cnfhr11',PASSWORD_DEFAULT);
 	
