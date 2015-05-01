@@ -1,6 +1,6 @@
 <?php
 session_start();
-include($_SERVER['DOCUMENT_ROOT'].'bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'/bd.php');
 $current_date = date('d-m-Y');
 $day = date('d');
 $month = date('m');

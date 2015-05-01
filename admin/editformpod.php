@@ -1,6 +1,6 @@
 <?php
 header('Content-type: text/html; charset=utf-8');
-include($_SERVER['DOCUMENT_ROOT'].'bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'/bd.php');
 include('checkauth.php');
 
 setlocale(LC_TIME,"ru_RU");
@@ -21,7 +21,7 @@ $email = $_POST['email'];
 $query_names = "UPDATE podved SET `name`='$name', `ruk` = '$ruk', `position`='$position',`phone`='$phone', `kans`='$kans', `fax`='$fax', `email`='$email' WHERE `id` = '$id'";
 $result = $mysqli->query($query_names);
 
-header("Location: http://10.50.10.100/admin/plist.php");
+header("Location: http://$_SERVER[SERVER_ADDR]/admin/plist.php");
 
 }
 

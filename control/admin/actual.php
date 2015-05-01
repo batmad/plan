@@ -1,6 +1,6 @@
 <?php
 header('Content-type: text/html; charset=utf-8');
-include($_SERVER['DOCUMENT_ROOT'].'bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'/bd.php');
 include('checkauth.php');
 
 $current_date = date('Y-m-d');

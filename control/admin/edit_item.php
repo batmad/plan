@@ -1,6 +1,6 @@
 <?php
 header('Content-type: text/html; charset=utf-8');
-include($_SERVER['DOCUMENT_ROOT'].'bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'/bd.php');
 include('checkauth.php');
 
 if (isset($_POST) && !empty($_POST)){
@@ -10,13 +10,13 @@ if (isset($_POST) && !empty($_POST)){
 		$query = "UPDATE `control_item` SET `descr`='$descr' WHERE `id`='$id'";
 		$result = $mysqli->query($query);
 		$sid = $_POST['id'];
-		header("Location:http://10.50.10.100/control/admin/add.php?id=$sid");
+		header("Location:http://$_SERVER[SERVER_ADDR]/control/admin/add.php?id=$sid");
 	}
 	if (isset($_POST['button2'])){
 		$id = $_POST['id'];
 		$query = "DELETE FROM control_item WHERE `id`='$id'";
 		$result = $mysqli->query($query);
-		header("Location:http://10.50.10.100/control/admin/");
+		header("Location:http://$_SERVER[SERVER_ADDR]/control/admin/");
 	}
 }
 

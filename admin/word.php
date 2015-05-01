@@ -1,6 +1,7 @@
 <?php
 // Include the PHPWord.php, all other classes were loaded by an autoloader
-include($_SERVER['DOCUMENT_ROOT'].'bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'/bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'/const.php');
 //include('checkauth.php');
 require_once 'PHPWord.php';
 
@@ -56,7 +57,7 @@ $PHPWord->addFontStyle('myOwnStyle', $fontStyleTh);
 $PHPWord->addFontStyle('myTdStyle', $fontStyleTd);
 
 // You can directly style your text by giving the addText function an array:
-$section->addText('План работы Министерства жилищно-коммунального хозяйства и энергетики Республики Саха (Якутия)', array('name'=>'Times New Roman', 'size'=>12, 'bold'=>true));
+$section->addText(PLAN, array('name'=>'Times New Roman', 'size'=>12, 'bold'=>true));
 
 $cellStyle = array('valign'=>'center');
 $styleTable = array('borderSize' => 6);
@@ -106,5 +107,5 @@ $objWriter = PHPWord_IOFactory::createWriter($PHPWord, 'Word2007');
 //$objWriter->save('/home/samba/tranzit/helloWorld.docx');
 $objWriter->save($_SERVER['DOCUMENT_ROOT'].'/admin/download/plan.docx');
 
-header("Location:".$_SERVER[DOCUMENT_ROOT]."/admin/download/plan.docx");
+header("Location:http://$_SERVER[SERVER_ADDR]/admin/download/plan.docx");
 ?>

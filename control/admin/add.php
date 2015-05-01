@@ -1,7 +1,7 @@
 <script type="text/javascript" src="script.js"></script>
 <?php
 header('Content-type: text/html; charset=utf-8');
-include($_SERVER['DOCUMENT_ROOT'].'bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'/bd.php');
 include('checkauth.php');
 include('function.php');
 
@@ -22,17 +22,17 @@ if (isset($_POST) && !empty($_POST)){
 		$result = $mysqli->query($query);
 		
 		if($_SESSION['is_entering_item']){
-			header("Location:http://10.50.10.100/control/admin/add.php?id=$id");
+			header("Location:http://$_SERVER[SERVER_ADDR]/control/admin/add.php?id=$id");
 			exit();
 		}
 		else{
-			header("Location:http://10.50.10.100/control/admin/index.php");
+			header("Location:http://$_SERVER[SERVER_ADDR]/control/admin/index.php");
 			exit();
 		}
 	}
 	else if (isset($_POST['button2'])){
 		$_SESSION['is_entering_item'] = false;
-		header("Location:http://10.50.10.100/control/admin/index.php");
+		header("Location:http://$_SERVER[SERVER_ADDR]/control/admin/index.php");
 		exit();
 	}
 	else {

@@ -5,7 +5,7 @@
 
 <?php
 header('Content-type: text/html; charset=utf-8');
-include($_SERVER['DOCUMENT_ROOT'].'bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'/bd.php');
 include('checkauth.php');
 
 $_SESSION['ctrl'] = 0;
@@ -22,7 +22,7 @@ echo "<a href='add.php'><img src='/img/add_task.png' title='Добавить п�
 echo "<a href='add_with_items.php'><img src='/img/add_task_items.png' title='Добавить поручение с пунктами'></a>";
 echo "<a href='performed.php'><img src='/img/performed.png' title='Исполненные поручения'></a>";
 echo "<a href='months.php'><img src='/img/calend.png' title='Поручения по месяцам'></a>";
-//echo "<a href='http://10.50.10.100/admin/list.php'><img src='/img/edit_person.png' title='Редактировать пользователей'></a>";
+
 echo "<a href='premium.php'><img src='/img/premium.png' title='Расчет премии'></a>";
 echo "<a href='actual.php'><img src='/img/actual.png' title='Актуальные поручения'></a>";
 echo "<div class='example3'>";

@@ -21,7 +21,7 @@
 	var depSelOpt = depSel.options[depSel.selectedIndex].value;
 	
 	var xmlhttp2 = getXmlHttp();
-	xmlhttp2.open('POST', 'http://10.50.10.100/control/admin/depQuery_by_actual.php', true); // Открываем асинхронное соединение
+	xmlhttp2.open('POST', '/control/admin/depQuery_by_actual.php', true); // Открываем асинхронное соединение
     xmlhttp2.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); // Отправляем кодировку
     xmlhttp2.send("depSelOpt=" + encodeURIComponent(depSelOpt)); // Отправляем POST-запрос
     xmlhttp2.onreadystatechange = function() { // Ждём ответа от сервера
@@ -33,7 +33,7 @@
     };
 	
 	var xmlhttp = getXmlHttp();
-	xmlhttp.open('POST', 'http://10.50.10.100/control/admin/dep_to_names.php', true); // Открываем асинхронное соединение
+	xmlhttp.open('POST', '/control/admin/dep_to_names.php', true); // Открываем асинхронное соединение
     xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); // Отправляем кодировку
     xmlhttp.send("depSelOpt=" + encodeURIComponent(depSelOpt)); // Отправляем POST-запрос
     xmlhttp.onreadystatechange = function() { // Ждём ответа от сервера
@@ -50,7 +50,7 @@
 	var nameSel = document.getElementById("name");
 	var nameSelOpt = nameSel.options[nameSel.selectedIndex].value;
 	var xmlhttp = getXmlHttp();
-	xmlhttp.open('POST', 'http://10.50.10.100/control/admin/depQuery.php', true); // Открываем асинхронное соединение
+	xmlhttp.open('POST', '/control/admin/depQuery.php', true); // Открываем асинхронное соединение
     xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); // Отправляем кодировку
     xmlhttp.send("nameSelOpt=" + encodeURIComponent(nameSelOpt)); // Отправляем POST-запрос
     xmlhttp.onreadystatechange = function() { // Ждём ответа от сервера

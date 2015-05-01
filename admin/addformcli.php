@@ -1,6 +1,6 @@
 <?php
 header('Content-type: text/html; charset=utf-8');
-include($_SERVER['DOCUMENT_ROOT'].'bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'/bd.php');
 include('date.php');
 include('checkauth.php');
 
@@ -22,7 +22,7 @@ $query_names = "INSERT INTO name(`name`,`weight`,`show_plan`,`id_dep`,`iptel`) V
 $result = $mysqli->query($query_names);
 
 
-header("Location: http://10.50.10.100/admin/list.php");
+header("Location: http://$_SERVER[SERVER_ADDR]/admin/list.php");
 
 }
 

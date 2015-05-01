@@ -1,6 +1,6 @@
 <?php
 header('Content-type: text/html; charset=utf-8');
-include($_SERVER['DOCUMENT_ROOT'].'bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'/bd.php');
 include('checkauth.php');
 $current_date = date('Y-m-d');
 
@@ -16,7 +16,7 @@ if (isset($_POST) && !empty($_POST)){
 	
 	$query = "UPDATE `control` SET `answer`='$answer',`day_answer`='$date' WHERE `id`='$id'";
 	$result = $mysqli->query($query);
-	header("Location:http://10.50.10.100/control/");
+	header("Location:http://$_SERVER[SERVER_ADDR]/control/");
 }
 
 if (isset($_GET) && !empty($_GET)){

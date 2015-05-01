@@ -1,6 +1,6 @@
 <?php
 header('Content-type: text/html; charset=utf-8');
-include($_SERVER['DOCUMENT_ROOT'].'bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'/bd.php');
 include('date.php');
 include('checkauth.php');
 
@@ -22,7 +22,7 @@ if (isset($_POST) && !empty($_POST)){
 		$query_names = "UPDATE name SET `login`='$login', `password`='$password' WHERE `id` = '$id'";
 		$result = $mysqli->query($query_names);
 
-		header("Location: http://10.50.10.100/admin/list.php");
+		header("Location: http://$_SERVER[SERVER_ADDR]/admin/list.php");
 	}
 }
 

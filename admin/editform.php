@@ -1,6 +1,6 @@
 <?php
 header('Content-type: text/html; charset=utf-8');
-include($_SERVER['DOCUMENT_ROOT'].'bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'/bd.php');
 include('date.php');
 include('checkauth.php');
 
@@ -19,10 +19,10 @@ $query_names = "UPDATE todo SET id_name='$name', date = '$date' ,descr = '$descr
 
 $result = $mysqli->query($query_names);
 if ($nextweek=='yes'){
-	header("Location: http://10.50.10.100/admin/index.php?plan=nextweek");
+	header("Location: http://$_SERVER[SERVER_ADDR]/admin/index.php?plan=nextweek");
 }
 else{
-	header("Location: http://10.50.10.100/admin");
+	header("Location: http://$_SERVER[SERVER_ADDR]/admin");
 }
 }
 

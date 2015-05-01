@@ -20,9 +20,9 @@
   function dep(){
 	var depSel = document.getElementById("department");
 	var depSelOpt = depSel.options[depSel.selectedIndex].value;
-	
+
 	var xmlhttp2 = getXmlHttp();
-	xmlhttp2.open('POST', 'http://10.50.10.100/control/depQuery.php', true); // Открываем асинхронное соединение
+	xmlhttp2.open('POST', '/control/depQuery.php', true); // Открываем асинхронное соединение
     xmlhttp2.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); // Отправляем кодировку
     xmlhttp2.send("depSelOpt=" + encodeURIComponent(depSelOpt)); // Отправляем POST-запрос
     xmlhttp2.onreadystatechange = function() { // Ждём ответа от сервера
@@ -34,7 +34,8 @@
     };
 	
 	var xmlhttp = getXmlHttp();
-	xmlhttp.open('POST', 'http://10.50.10.100/control/dep_to_names.php', true); // Открываем асинхронное соединение
+	
+	xmlhttp.open('POST', '/control/dep_to_names.php', true); // Открываем асинхронное соединение
     xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); // Отправляем кодировку
     xmlhttp.send("depSelOpt=" + encodeURIComponent(depSelOpt)); // Отправляем POST-запрос
     xmlhttp.onreadystatechange = function() { // Ждём ответа от сервера
@@ -51,7 +52,7 @@
 	var nameSel = document.getElementById("name");
 	var nameSelOpt = nameSel.options[nameSel.selectedIndex].value;
 	var xmlhttp = getXmlHttp();
-	xmlhttp.open('POST', 'http://10.50.10.100/control/depQuery.php', true); // Открываем асинхронное соединение
+	xmlhttp.open('POST', '/control/depQuery.php', true); // Открываем асинхронное соединение
     xmlhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); // Отправляем кодировку
     xmlhttp.send("nameSelOpt=" + encodeURIComponent(nameSelOpt)); // Отправляем POST-запрос
     xmlhttp.onreadystatechange = function() { // Ждём ответа от сервера
@@ -70,7 +71,7 @@
 <?php
 $_SESSION['analytics'] = true;
 header('Content-type: text/html; charset=utf-8');
-include($_SERVER['DOCUMENT_ROOT'].'bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'/bd.php');
 
 $current_date = date('d-m-Y');
 		

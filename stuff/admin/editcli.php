@@ -1,6 +1,6 @@
 <?php
 header('Content-type: text/html; charset=utf-8');
-include($_SERVER['DOCUMENT_ROOT'].'bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'/bd.php');
 include('checkauth.php');
 
 setlocale(LC_TIME,"ru_RU");
@@ -18,7 +18,7 @@ $query_names = "UPDATE name SET `name`='$name', `weight` = '$weight', `show_stuf
 
 $result = $mysqli->query($query_names);
 
-header("Location: http://10.50.10.100/stuff/admin/list.php");
+header("Location: http://$_SERVER[SERVER_ADDR]/stuff/admin/list.php");
 
 }
 

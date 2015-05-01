@@ -1,12 +1,19 @@
-<html>
-<head>
-<title>Информация по персоналу Министерства ЖКХ и энергетики РС(Я)</title>
-</head>
-<body>
 <?php
 header('Content-type: text/html; charset=utf-8');
-include($_SERVER['DOCUMENT_ROOT'].'bd.php');
-echo "<br/><a href='http://10.50.10.100/'><img src='/img/previous.png' title='Вернуться обратно'></a>";
+include($_SERVER['DOCUMENT_ROOT'].'/bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'/const.php');
+
+?>
+
+<html>
+<head>
+<title><?php echo PERSONAL ?></title>
+</head>
+<body>
+
+
+<?php
+echo "<br/><a href='index.php'><img src='/img/previous.png' title='Вернуться обратно'></a>";
 echo "<br/>";
 echo "<br/>";
 

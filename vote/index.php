@@ -1,5 +1,5 @@
 <?php
-include($_SERVER['DOCUMENT_ROOT'].'bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'/bd.php');
 session_start();
 if (isset($_POST) && !empty($_POST)){
 	$id_poll     = $_POST['id_poll'];

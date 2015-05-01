@@ -1,6 +1,12 @@
+<?php
+header('Content-type: text/html; charset=utf-8');
+include('bd.php');
+include('const.php');
+?>
+
 <html>
 <head>
-<title>Информацию по контрольным поручениям Министерства ЖКХ и энергетики РС(Я)</title>
+<title><?php echo CONTROL ?></title>
 <script type="text/javascript">
 function sh(){
 	var det = document.getElementById('detail');
@@ -26,8 +32,6 @@ $echo = "Информация по контролю за ".$months_rus[$month]."
 $total_year = false;
 
 
-header('Content-type: text/html; charset=utf-8');
-include('bd.php');
 echo "<a href='/'><img src='/img/previous.png' title='Вернуться обратно'></a><br/><br/>";
 echo "<a href='/control'><img src='/img/cabinet.png' title='Личный кабинет'></a>";
 echo "<a href='month.php'><img src='/img/calend.png' title='Поручения по месяцам'></a>";

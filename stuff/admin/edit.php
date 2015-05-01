@@ -1,6 +1,6 @@
 <?php
 header('Content-type: text/html; charset=utf-8');
-include($_SERVER['DOCUMENT_ROOT'].'bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'/bd.php');
 //include('checkauth.php');
 
 echo "<a href='index.php'><img src='/img/previous.png' title='Вернуться обратно'></a>";
@@ -20,7 +20,7 @@ if (isset($_POST) && !empty($_POST)){
 	$query = "UPDATE `stuff` SET `descr` = '$descr', `start` = '$start', `id_name` = '$id_name', `end`='$end' WHERE `id` = '$id'";
 	$result = $mysqli->query($query);
 
-	header("Location: http://10.50.10.100/stuff/admin/");
+	header("Location: http://$_SERVER[SERVER_ADDR]/stuff/admin/");
 }
 
 if (isset($_GET) && !empty($_GET)){

@@ -1,6 +1,6 @@
 <?php
 header('Content-type: text/html; charset=utf-8');
-include($_SERVER['DOCUMENT_ROOT'].'bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'/bd.php');
 include('checkauth.php');
 include('function.php');
 
@@ -29,10 +29,10 @@ if (isset($_POST) && !empty($_POST)){
 		}
 		$result = $mysqli->query($query);
 		if ($_SESSION['is_entering_item']){
-			header("Location:http://10.50.10.100/control/admin/add.php?id=$sid");
+			header("Location:http://$_SERVER[SERVER_ADDR]/control/admin/add.php?id=$sid");
 		}
 		else{
-			header("Location:http://10.50.10.100/control/admin/");
+			header("Location:http://$_SERVER[SERVER_ADDR]/control/admin/");
 		}
 	}
 	else if (isset($_POST['button2'])){
@@ -47,10 +47,10 @@ if (isset($_POST) && !empty($_POST)){
 		$result = $mysqli->query($query);
 		
 		if ($_SESSION['is_entering_item']){
-			header("Location:http://10.50.10.100/control/admin/add.php?id=$sid");
+			header("Location:http://$_SERVER[SERVER_ADDR]/control/admin/add.php?id=$sid");
 		}
 		else{
-			header("Location:http://10.50.10.100/control/admin/");
+			header("Location:http://$_SERVER[SERVER_ADDR]/control/admin/");
 		}
 	}
 	else {

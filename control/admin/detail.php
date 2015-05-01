@@ -1,6 +1,6 @@
 <?php
 header('Content-type: text/html; charset=utf-8');
-include($_SERVER['DOCUMENT_ROOT'].'bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'/bd.php');
 include('checkauth.php');
 
 setlocale(LC_TIME,"ru_RU");
@@ -20,7 +20,7 @@ $mysqli->close();
 ?>
 
 <div style="margin-left:50px;margin-right:50px;text-align:justify;">
-<p><a href="http://10.50.10.100/control/admin">Назад</a></p>
+<p><a href="http://$_SERVER[SERVER_ADDR]/control/admin">Назад</a></p>
 <div>
 <p><b>Поручение</b></p>
 <p>

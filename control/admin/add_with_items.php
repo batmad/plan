@@ -1,6 +1,6 @@
 <?php
 header('Content-type: text/html; charset=utf-8');
-include($_SERVER['DOCUMENT_ROOT'].'bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'/bd.php');
 include('checkauth.php');
 
 $_SESSION['search'] = false;
@@ -14,7 +14,7 @@ if (isset($_POST) && !empty($_POST)){
 	$result = $mysqli->query($query);
 	$_SESSION['sid'] = $mysqli->insert_id;
 	$id = $_SESSION['sid'];
-	header("Location:http://10.50.10.100/control/admin/add.php?id=$id");
+	header("Location:http://$_SERVER[SERVER_ADDR]/control/admin/add.php?id=$id");
 }
 
 if (isset($_GET) && !empty($_GET)){

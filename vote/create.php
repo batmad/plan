@@ -1,5 +1,5 @@
 <?php
-include($_SERVER['DOCUMENT_ROOT'].'bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'/bd.php');
 
 if (isset($_POST) && !empty($_POST)){
 	$name= $_POST['name'];
@@ -13,7 +13,7 @@ if (isset($_POST) && !empty($_POST)){
 		$result = $mysqli->query($query_names);
 	}
 	
-	header("Location: http://10.50.10.100/vote/index.php");
+	header("Location: http://$_SERVER[SERVER_ADDR]/vote/index.php");
 	
 }
 

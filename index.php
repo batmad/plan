@@ -1,13 +1,19 @@
-<html>
-<head>
-<title>План работы Министерства ЖКХ и энергетики РС(Я)</title>
-</head>
-<body>
+
 
 <?php
 header('Content-type: text/html; charset=utf-8');
 include('bd.php');
 include('date.php');
+include('const.php');
+?>
+
+<html>
+<head>
+<title><?php echo PLAN ?></title>
+</head>
+<body>
+
+<?php
 echo "<table><tr>";
 echo "<td/><a href='/week.php'><img src='/img/old_calend.png' title='Старый план работы'></a></td>";
 echo "<td/><a href='/stuff/'><img src='/img/person.png' title='Персонал'></a></td>";

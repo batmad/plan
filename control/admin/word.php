@@ -1,6 +1,6 @@
 <?php
 // Include the PHPWord.php, all other classes were loaded by an autoloader
-include($_SERVER['DOCUMENT_ROOT'].'bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'/bd.php');
 include('function.php');
 //include('checkauth.php');
 if (isset($_POST) && !empty($_POST)){
@@ -139,9 +139,9 @@ if (isset($_POST) && !empty($_POST)){
 	// At least write the document to webspace:
 	$objWriter = PHPWord_IOFactory::createWriter($PHPWord, 'Word2007');
 	//$objWriter->save('/home/samba/tranzit/helloWorld.docx');
-	$objWriter->save('/var/www/plan/admin/download/control.docx');
+	$objWriter->save($_SERVER['DOCUMENT_ROOT'].'/admin/download/control.docx');
 
-	header('Location:http://10.50.10.100/admin/download/control.docx');
+	header('Location:http://$_SERVER[SERVER_ADDR]/admin/download/control.docx');
 }
 
 

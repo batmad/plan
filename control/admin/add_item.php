@@ -1,7 +1,7 @@
 <?php
 mb_internal_encoding("UTF-8");
 header('Content-type: text/html; charset=utf-8');
-include($_SERVER['DOCUMENT_ROOT'].'bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'/bd.php');
 include('checkauth.php');
 
 if (isset($_POST) && !empty($_POST)){
@@ -12,7 +12,7 @@ if (isset($_POST) && !empty($_POST)){
 	$id = $_POST['ctrl'];
 	$query = "INSERT INTO `control_item` (`control_id`,`descr`,`dep_id`,`date`,`comment`) VALUES('$id','$descr','$dep_id','$date','$comment')";
 	$result = $mysqli->query($query);
-	header("Location:http://10.50.10.100/control/admin/add_item2.php");
+	header("Location:http://$_SERVER[SERVER_ADDR]/control/admin/add_item2.php");
 }
 
 if (isset($_GET) && !empty($_GET)){

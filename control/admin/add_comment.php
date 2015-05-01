@@ -1,6 +1,6 @@
 <?php
 header('Content-type: text/html; charset=utf-8');
-include($_SERVER['DOCUMENT_ROOT'].'bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'/bd.php');
 include('checkauth.php');
 
 if (isset($_POST) && !empty($_POST)){
@@ -8,7 +8,7 @@ if (isset($_POST) && !empty($_POST)){
 	$id = $_POST['id'];
 	$query = "UPDATE `control` SET `comment` = '$comment' WHERE `id`='$id'";
 	$result = $mysqli->query($query);
-	header("Location:http://10.50.10.100/control/admin/");
+	header("Location:http://$_SERVER[SERVER_ADDR]/control/admin/");
 }
 
 if (isset($_GET) && !empty($_GET)){

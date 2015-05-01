@@ -1,7 +1,7 @@
 <?php
 
 $_SESSION['url'] = "matrix.php";
-include($_SERVER['DOCUMENT_ROOT'].'bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'/bd.php');
 include('checkauth.php');
 $id = $_SESSION['id'];
 
@@ -12,7 +12,7 @@ class matrix {
 		$this->id = $id;
 	}
 	function getFromDB($row){
-		include('bd.php');
+		//include('bd.php');
 		$query = "SELECT $row FROM matrix WHERE id_spec=".$this->id;
 		$returnQuery = $mysqli->query($query); 
 		$result = $returnQuery->fetch_assoc();

@@ -4,7 +4,7 @@ $year = date('Y');
 $day = date('t');
 
 header('Content-type: text/html; charset=utf-8');
-include($_SERVER['DOCUMENT_ROOT'].'bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'/bd.php');
 echo "<a href='/control/admin/premium.php'><img src='/img/previous.png' title='Вернуться обратно'></a><br/><br/>";
 
 if(isset($_GET) && !empty($_GET)){
