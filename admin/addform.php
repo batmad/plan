@@ -1,8 +1,10 @@
 <?php
 header('Content-type: text/html; charset=utf-8');
 include($_SERVER['DOCUMENT_ROOT'].'/bd.php');
-include('date.php');
+include($_SERVER['DOCUMENT_ROOT'].'/date.php');
 include('checkauth.php');
+
+$myDate = new mDate();
 
 setlocale(LC_TIME,"ru_RU");
 
@@ -22,10 +24,14 @@ if (isset($_POST) && !empty($_POST)){
 	$name = $_POST['name'];
 	$descr = $_POST['descr'];
 	$date = $_POST['date'];
+	$time = $_POST['time'];
 	$nextweek = $_POST['nextweek'];
+	$datetime = $myDate->datetime($date,$time);
+	$responsible = $_POST['responsible'];
+	$place = $_POST['place'];
 
 
-	$query_names = "INSERT INTO todo(id_name,date,descr) VALUES ('$name','$date','$descr')";
+	$query_names = "INSERT INTO todo(id_name,date,descr,responsible,place) VALUES ('$name','$datetime','$descr','$responsible','$place')";
 	$result = $mysqli->query($query_names);
 	
 	if ($nextweek=='yes'){
@@ -72,8 +78,11 @@ while ($row = $result->fetch_assoc()){
     }
 	echo "</select>";
 	?>
-	Дата: <input type="text" name="date" value="<?php if(isset($gl_date)){echo $gl_date;} ?>"><br/>
-    Мероприятие: <br/><textarea name="descr" cols="100" rows="50"></textarea><br/>
+	Дата: <input type="text" name="date" value="<?php if(isset($gl_date)){echo $gl_date;} ?>">
+	Время: <input type="time" name="time" value=""><br/>
+    Мероприятие: <br/><textarea name="descr" cols="100" rows="10"></textarea><br/>
+    Место: <input type="text" name="place" value=""><br/>
+    Ответственный: <input type="text" name="responsible" value=""><br/>
 	<input type="hidden" name="nextweek" value="<?php echo $nextweek ?>">
 	<input type="submit">
     </form>
