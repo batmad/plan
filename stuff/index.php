@@ -13,7 +13,7 @@ include($_SERVER['DOCUMENT_ROOT'].'/const.php');
 
 
 <?php
-echo "<br/><a href='index.php'><img src='/img/previous.png' title='Вернуться обратно'></a>";
+echo "<br/><a href='/'><img src='/img/previous.png' title='Вернуться обратно'></a>";
 echo "<br/>";
 echo "<br/>";
 
