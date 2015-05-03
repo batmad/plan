@@ -2,11 +2,13 @@
 // Include the PHPWord.php, all other classes were loaded by an autoloader
 include($_SERVER['DOCUMENT_ROOT'].'/bd.php');
 include($_SERVER['DOCUMENT_ROOT'].'/const.php');
+include($_SERVER['DOCUMENT_ROOT'].'/date.php');
 //include('checkauth.php');
 require_once 'PHPWord.php';
+$myDate = new mDate();
 
 if (isset($_GET['nextweek']) && !empty($_GET['nextweek']) && $_GET['nextweek']=="yes"){
-	include('date_nw.php');
+	$array_week = $myDate->createArrayWeek(7);
 	$nextweek='yes';
 }
 else if (isset($_GET['old']) && !empty($_GET['old'])&& $_GET['old']=="yes"){
@@ -16,7 +18,7 @@ else if (isset($_GET['old']) && !empty($_GET['old'])&& $_GET['old']=="yes"){
 	}
 }
 else{
-	include('date.php');
+	$array_week = $myDate->createArrayWeek();
 	$nextweek='no';
 }
 
@@ -33,16 +35,30 @@ $ruks = array();
 foreach ($rows as $row){
 	array_push($ruks,$row['name']);
 	foreach($array_week as $day){
-		$query_todos = "SELECT descr,id FROM todo WHERE id_name=".$row['id']." AND `date`='$day'";
-		$result2 = $mysqli->query($query_todos) or trigger_error($mysqli->error."[$query_todos]");
-		$row2 = $result2->fetch_assoc();
-		$plan[$row['name']][$day]['descr']=nl2br($row2['descr']);
-		$plan[$row['name']][$day]['id'] = $row2['id']; 
-		$plan[$row['name']][$day]['id_name'] = $row['id'];
-		$plan[$row['name']][$day]['date'] = $day;
+		$descr = null;
+		$dayBegin = $myDate->dateBegin($day);
+		$dayEnd = $myDate->dateEnd($day);
+
+		$query_todos = "SELECT descr,id,DATE_FORMAT(date, '%H:%i') AS hours,place,responsible FROM todo WHERE id_name=".$row['id']." AND `date` BETWEEN '$dayBegin' AND '$dayEnd'";
+		$result2 = $mysqli->query($query_todos);
+		while($row2 = $result2->fetch_assoc()){
+			if($row2['hours'] == "00:00"){
+				$row2['hours'] = null;
+			}
+			if($row2['descr'] == ""){
+				$row2['descr'] = " ";
+			}
+			if($row2['responsible'] != ""){
+				$row2['responsible'] = " Отв. ".$row2['responsible'];
+			}
+			$plan[$row['name']][$day][$row2['hours']] = $row2['descr']." ".$row2['place'].$row2['responsible'];
+		}
+		if(!isset($plan[$row['name']][$day])){
+			$plan[$row['name']][$day][null] = " ";
+		}
 	}
 }
-
+//print_r($plan);
 
 
 // Create a new PHPWord Object
@@ -90,11 +106,10 @@ foreach ($ruks as $ruk){
 	$table->addRow();
 	$cell = $table->addCell(2000);
 	$cell->addText("$ruk",'myTdStyle');
-	foreach ($plan[$ruk] as $key => $todo){
+	foreach ($plan[$ruk] as $day ){
 			$cell = $table->addCell(2000);
-			$temp = explode('<br />',$todo['descr']);
-			foreach ($temp as $todo){
-				$cell->addText($todo,'myTdStyle');
+			foreach ($day as $time => $todo){
+				$cell->addText($time." ".$todo,'myTdStyle');
 			}
 	}
 }
