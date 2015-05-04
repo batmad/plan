@@ -9,7 +9,7 @@ class mDate{
 	function createArrayWeek($day = 0){
 		$array_week = array();
 		
-		$j = 1;
+		$j = 0;
 		while(date('N',strtotime("-$j day")) > 1){
 			$j++;
 		}
