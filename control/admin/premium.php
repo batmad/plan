@@ -1,8 +1,10 @@
 <?php
 
 $year = date('Y');
-$month = "03";
-$day = date('t');
+$month = "04";
+$day = date('t',mktime(0,0,0,$month,1,$year));
+$dayBegin = $year."-".$month."-01";
+$dayEnd = $year."-".$month."-".$day;
 
 function cmp($a, $b) {
   return $a["sort"] - $b["sort"];
@@ -26,7 +28,8 @@ while ($row = $result->fetch_assoc()){
 }
 
 //$query= "SELECT `c`.`id`,`c`.`spec_id`,`c`.`date`,`c`.`ctrl`,`c`.`performed`,`c`.`day_performed`,`n`.`id_dep`,`n`.`weight` FROM `control` AS `c` LEFT JOIN `name` AS `n` ON (`c`.`spec_id`=`n`.`id`) WHERE `c`.`date` LIKE '$year-$month-%' OR `c`.`day_performed` LIKE '$year-$month-%' ORDER BY `n`.`id_dep`,`n`.`weight` ";
-$query= "SELECT `c`.`id`,`c`.`spec_id`,`c`.`date`,`c`.`ctrl`,`c`.`performed`,`c`.`day_performed`,`n`.`id_dep`,`n`.`weight` FROM `control` AS `c` LEFT JOIN `name` AS `n` ON (`c`.`spec_id`=`n`.`id`) WHERE `c`.`day_performed` LIKE '$year-$month-%' OR ((`c`.`date` BETWEEN '0000-00-00' AND '$year-$month-$day') AND `c`.`ctrl`='0') ORDER BY `n`.`id_dep`,`n`.`weight` ";
+//$query= "SELECT `c`.`id`,`c`.`spec_id`,`c`.`date`,`c`.`ctrl`,`c`.`performed`,`c`.`day_performed`,`n`.`id_dep`,`n`.`weight` FROM `control` AS `c` LEFT JOIN `name` AS `n` ON (`c`.`spec_id`=`n`.`id`) WHERE `c`.`day_performed` LIKE '$year-$month-%' OR ((`c`.`date` BETWEEN '0000-00-00' AND '$year-$month-$day') AND `c`.`ctrl`='0') ORDER BY `n`.`id_dep`,`n`.`weight` ";
+$query= "SELECT `c`.`id`,`c`.`spec_id`,`c`.`date`,`c`.`ctrl`,`c`.`performed`,`c`.`day_performed`,`n`.`id_dep`,`n`.`weight` FROM `control` AS `c` LEFT JOIN `name` AS `n` ON (`c`.`spec_id`=`n`.`id`) WHERE (`c`.`day_performed` BETWEEN '$dayBegin' AND '$dayEnd') OR (`c`.`date` BETWEEN '$dayBegin' AND '$dayEnd') OR ((`c`.`date` BETWEEN '0000-00-00' AND '$dayEnd') AND `c`.`ctrl`='0') ORDER BY `n`.`id_dep`,`n`.`weight` ";
 $result = $mysqli->query($query);
 
 

@@ -61,7 +61,7 @@ if (isset($_POST) && !empty($_POST)){
 		$id = $_POST['id'];
 		$date = $_POST['date'];
 		$performed = $_POST['performed'];
-		$query = "UPDATE `control` SET `ctrl`='$ctrl',`performed`='$performed',`day_performed`='$current_date' WHERE `id`='$id'";
+		$query = "UPDATE `control` SET `ctrl`='$ctrl',`performed`='$performed',`day_performed`='$date' WHERE `id`='$id'";
 		$result = $mysqli->query($query);
 		if ($_SESSION['search']){
 			$search = $_SESSION['descr'];

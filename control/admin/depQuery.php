@@ -19,7 +19,7 @@ else if (isset($_POST['dateSelOpt'])){
 		$query_search = "SELECT `c`.`id`,`c`.`descr`,`c`.`performed`,`c`.`answer`,`c`.`dep_id`,`c`.`spec_id`,`c`.`date`,`c`.`ctrl`,`c`.`comment`,`d`.`short` AS `dep_name`, `n`.`name` AS `spec_name`,`i`.`descr` AS `item_descr` FROM `control` AS `c` LEFT JOIN `department` AS `d` ON (`c`.`dep_id`=`d`.`id`) LEFT JOIN `name` AS `n` ON (`c`.`spec_id`=`n`.`id`) LEFT JOIN `control_item` AS `i` ON (`c`.`control_id`=`i`.`id`) WHERE `c`.`date`='$search' ";
 }
 
-$current_date = date('d-m-Y');
+$current_date = date('Y-m-d');
 $query = $query_search;
 $result = $mysqli->query($query);
 

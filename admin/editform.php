@@ -78,7 +78,7 @@ while ($row = $result->fetch_assoc()){
 	Дата: <input type="text" name="date" value="<?php echo $todo['date']?>">
 	Время: <input type="time" name="time" value="<?php echo $todo['hours']?>"><br/>
     Мероприятие: <br/><textarea name="descr" cols="100" rows="10"><?php echo $todo['descr'] ?></textarea><br/>
-    Место: <input type="text" name="place" value="<?php echo $todo['place']?>"><br/>
+    Место: <input type="text" name="place" value="<?php echo htmlspecialchars($todo['place'])?>"><br/>
     Ответственный: <input type="text" name="responsible" value="<?php echo $todo['responsible']?>"><br/>
 	<input type="hidden" name="id" value="<?php echo $id?>">
 	<input type="hidden" name="nextweek" value="<?php echo $nextweek ?>">

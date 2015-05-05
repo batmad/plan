@@ -47,11 +47,14 @@ foreach ($rows as $row){
 		$dayBegin = $myDate->dateBegin($day);
 		$dayEnd = $myDate->dateEnd($day);
 
-		$query_todos = "SELECT descr,id,DATE_FORMAT(date, '%H:%i') AS hours,place,responsible FROM todo WHERE id_name=".$row['id']." AND `date` BETWEEN '$dayBegin' AND '$dayEnd'";
+		$query_todos = "SELECT descr,id,DATE_FORMAT(date, '%H:%i') AS hours,place,responsible FROM todo WHERE id_name=".$row['id']." AND `date` BETWEEN '$dayBegin' AND '$dayEnd' ORDER BY `date`";
 		$result2 = $mysqli->query($query_todos);
 		while($row2 = $result2->fetch_assoc()){
 			if($row2['hours'] == "00:00"){
 				$row2['hours'] = null;
+			}
+			if ($row['place'] != ""){
+				$row['place'] = "<br/><b>".$row2['place']."</b>";
 			}
 			if($row2['responsible'] == ""){
 				$row2['responsible'] = null;
@@ -61,7 +64,7 @@ foreach ($rows as $row){
 			}
 
 			if($descr != null){
-				$descr = $descr." <hr/> <b>".$row2['hours']."</b> ".nl2br($row2['descr'])."<br/><b>$row2[place]</b>$row2[responsible]<br/><a href=\"editform.php?id=".$row2['id']."&nextweek=".$nextweek."\"><img src='/img/edit.png' title='Редактировать'></a>";
+				$descr = $descr." <hr/> <b>".$row2['hours']."</b> ".nl2br($row2['descr'])."$row2[place] $row2[responsible]<br/><a href=\"editform.php?id=".$row2['id']."&nextweek=".$nextweek."\"><img src='/img/edit.png' title='Редактировать'></a>";
 			}
 			else{
 				$descr = $descr."<b valign=top>".$row2['hours']."</b> ".nl2br($row2['descr'])."<br/><b>$row2[place]</b>$row2[responsible]<br/><a href=\"editform.php?id=".$row2['id']."&nextweek=".$nextweek."\"><img src='/img/edit.png' title='Редактировать'></a>";

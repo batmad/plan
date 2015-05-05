@@ -46,14 +46,16 @@ foreach ($ruks as $row){
 		$dayBegin = $myDate->dateBegin($day);
 		$dayEnd = $myDate->dateEnd($day);
 
-		$query_todos = "SELECT descr, DATE_FORMAT(date, '%H:%i') AS hours,place,responsible FROM todo WHERE id_name=".$row['id']." AND `date` BETWEEN '$dayBegin' AND '$dayEnd'";
+		$query_todos = "SELECT descr, DATE_FORMAT(date, '%H:%i') AS hours,place,responsible FROM todo WHERE id_name=".$row['id']." AND `date` BETWEEN '$dayBegin' AND '$dayEnd' ORDER BY `date`";
 		$result2 = $mysqli->query($query_todos);
 		while($row2 = $result2->fetch_assoc()){
 			
 			if($row2['hours'] == "00:00"){
 				$row2['hours'] = null;
 			}
-
+			if ($row2['place'] != ""){
+				$row2['place'] = "<br/><b>".$row2['place']."</b>";
+			}
 			if($row2['responsible'] == ""){
 				$row2['responsible'] = null;
 			}
@@ -64,10 +66,10 @@ foreach ($ruks as $row){
 
 
 			if($descr != null){
-				$descr = $descr." <hr/> <b>".$row2['hours']." </b>".nl2br($row2['descr'])."<br/><b>$row2[place]</b>$row2[responsible]<br/>";
+				$descr = $descr." <hr/> <b>".$row2['hours']." </b>".nl2br($row2['descr'])."$row2[place] $row2[responsible]<br/>";
 			}
 			else{
-				$descr = $descr." <b>".$row2['hours']." </b>".nl2br($row2['descr'])."<br/><b>$row2[place]</b>$row2[responsible]<br/>";
+				$descr = $descr." <b>".$row2['hours']." </b>".nl2br($row2['descr'])."$row2[place] $row2[responsible]<br/>";
 			}
 		}
 		$plan[$row['name']][$day]=$descr; 

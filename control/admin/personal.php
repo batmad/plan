@@ -1,7 +1,9 @@
 <?php
-$month = date('m');
+$month = date('m')-1;
 $year = date('Y');
-$day = date('t');
+$day = date('t',mktime(0,0,0,$month,1,$year));
+$dayBegin = $year."-".$month."-01";
+$dayEnd = $year."-".$month."-".$day;
 
 header('Content-type: text/html; charset=utf-8');
 include($_SERVER['DOCUMENT_ROOT'].'/bd.php');
@@ -27,8 +29,10 @@ $query= "SELECT `c`.`id`,
 		LEFT JOIN `control_item` AS `i` 
 		ON (`c`.`control_id`=`i`.`id`) 
 		WHERE `c`.`spec_id` = '$id' 
-		AND (((`c`.`date` BETWEEN '0000-00-00' AND '$year-$month-$day') AND `c`.`ctrl`='0') 
-		OR `c`.`day_performed` LIKE '$year-$month-%')";
+		AND ((`c`.`day_performed` BETWEEN '$dayBegin' AND '$dayEnd') 
+		OR (`c`.`date` BETWEEN '$dayBegin' AND '$dayEnd') 
+		OR ((`c`.`date` BETWEEN '0000-00-00' AND '$dayEnd') AND `c`.`ctrl`='0'))
+		";
 $result = $mysqli->query($query);
 
 ?>

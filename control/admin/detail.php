@@ -20,7 +20,7 @@ $mysqli->close();
 ?>
 
 <div style="margin-left:50px;margin-right:50px;text-align:justify;">
-<p><a href="http://$_SERVER[SERVER_ADDR]/control/admin">Назад</a></p>
+<p><a href="http://<?php echo $_SERVER['SERVER_ADDR'];?>/control/admin">Назад</a></p>
 <div>
 <p><b>Поручение</b></p>
 <p>
