@@ -84,7 +84,7 @@ foreach($week as $w){
 		echo "<br/><b>".$w['month']."</b><br/>";
 		$month_pocket = $w['month'];
 	}
-	echo "<a href=\"http://10.50.10.100/old_plan.php?";
+	echo "<a href=\"http://$_SERVER[SERVER_ADDR]/old_plan.php?";
 	$j = 0;
 	for ($i=6;$i>0;$i--){		
 		$date = new DateTime();

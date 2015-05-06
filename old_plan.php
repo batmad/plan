@@ -1,8 +1,9 @@
 <?php
 header('Content-type: text/html; charset=utf-8');
 include('bd.php');
-//include('date.php');
+include('date.php');
 
+$myDate = new mDate();
 $array_week = array();
 if (isset($_GET) && !empty($_GET)){
 	echo "<a href='/week.php'><img src='/img/previous.png' title='Вернуться обратно'></a>";
@@ -32,10 +33,36 @@ $ruks = array();
 foreach ($rows as $row){
 	array_push($ruks,$row['name']);
 	foreach($array_week as $day){
-		$query_todos = "SELECT descr FROM todo WHERE id_name=".$row['id']." AND `date`='$day'";
-		$result2 = $mysqli->query($query_todos) or trigger_error($mysqli->error."[$query_todos]");
-		$row2 = $result2->fetch_assoc();
-		$plan[$row['name']][$day]=nl2br($row2['descr']);
+		$descr = null;
+		$dayBegin = $myDate->dateBegin($day);
+		$dayEnd = $myDate->dateEnd($day);
+		$query_todos = "SELECT descr, DATE_FORMAT(date, '%H:%i') AS hours,place,responsible FROM todo WHERE id_name=".$row['id']." AND `date` BETWEEN '$dayBegin' AND '$dayEnd' ORDER BY `date`";
+		$result2 = $mysqli->query($query_todos);
+		while($row2 = $result2->fetch_assoc()){
+			
+			if($row2['hours'] == "00:00"){
+				$row2['hours'] = null;
+			}
+			if ($row2['place'] != ""){
+				$row2['place'] = "<br/><b>".$row2['place']."</b>";
+			}
+			if($row2['responsible'] == ""){
+				$row2['responsible'] = null;
+			}
+			else{
+				$row2['responsible'] = "<br/><i>Отв.".$row2['responsible']."</i>";
+			}
+
+
+
+			if($descr != null){
+				$descr = $descr." <hr/> <b>".$row2['hours']." </b>".nl2br($row2['descr'])."$row2[place] $row2[responsible]<br/>";
+			}
+			else{
+				$descr = $descr." <b>".$row2['hours']." </b>".nl2br($row2['descr'])."$row2[place] $row2[responsible]<br/>";
+			}
+		}
+		$plan[$row['name']][$day]=$descr; 
 	}
 }
 echo "<br/>";

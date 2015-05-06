@@ -36,8 +36,12 @@ if (isset($_POST) && !empty($_POST)){
 
 if (isset($_GET) && !empty($_GET)){
 	$id = $_GET['id'];
-	$nextweek = $_GET['nextweek'];
-	
+	if(isset($_GET['nextweek'])){
+		$nextweek = $_GET['nextweek'];
+	}
+	else{
+		$nextweek = "no";
+	}
 	$query = "SELECT descr,DATE_FORMAT(date, '%H:%i') AS hours,DATE_FORMAT(date, '%d-%m-%Y') AS date,id_name,place,responsible FROM todo WHERE id='$id'";
 	$res = $mysqli->query($query);
 	
