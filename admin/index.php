@@ -53,8 +53,8 @@ foreach ($rows as $row){
 			if($row2['hours'] == "00:00"){
 				$row2['hours'] = null;
 			}
-			if ($row['place'] != ""){
-				$row['place'] = "<br/><b>".$row2['place']."</b>";
+			if ($row2['place'] != ""){
+				$row2['place'] = "<br/><b>".$row2['place']."</b>";
 			}
 			if($row2['responsible'] == ""){
 				$row2['responsible'] = null;
@@ -67,7 +67,7 @@ foreach ($rows as $row){
 				$descr = $descr." <hr/> <b>".$row2['hours']."</b> ".nl2br($row2['descr'])."$row2[place] $row2[responsible]<br/><a href=\"editform.php?id=".$row2['id']."&nextweek=".$nextweek."\"><img src='/img/edit.png' title='Редактировать'></a>";
 			}
 			else{
-				$descr = $descr."<b valign=top>".$row2['hours']."</b> ".nl2br($row2['descr'])."<br/><b>$row2[place]</b>$row2[responsible]<br/><a href=\"editform.php?id=".$row2['id']."&nextweek=".$nextweek."\"><img src='/img/edit.png' title='Редактировать'></a>";
+				$descr = $descr."<b valign=top>".$row2['hours']."</b> ".nl2br($row2['descr'])."$row2[place] $row2[responsible]<br/><a href=\"editform.php?id=".$row2['id']."&nextweek=".$nextweek."\"><img src='/img/edit.png' title='Редактировать'></a>";
 			}
 		}
 		$plan[$row['name']][$day]['descr']=$descr;
