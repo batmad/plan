@@ -18,10 +18,10 @@ if (isset($_POST) && !empty($_POST)){
 		echo "<h1>Введенный логин уже сущесвует!</h1>";
 	}
 	else{
-		$query_names = "UPDATE name SET `login`='$login', `password`='$password' WHERE `id` = '$id'";
+		$query_names = "UPDATE admins SET `username`='$login', `password`='$password' WHERE `id` = '$id'";
 		$result = $mysqli->query($query_names);
 
-		header("Location: http://$_SERVER[SERVER_ADDR]/admin/list.php");
+		header("Location: http://$_SERVER[SERVER_ADDR]/admin/admlist.php");
 	}
 }
 
@@ -31,15 +31,15 @@ if (isset($_GET) && !empty($_GET)){
 
 }
 
-$query = "SELECT login,name FROM name WHERE `id` = '$id'";
+$query = "SELECT username,name FROM admins WHERE `id` = '$id'";
 $result = $mysqli->query($query);
 $result = $result->fetch_assoc();
-$login = $result['login'];
+$login = $result['username'];
 $name = $result['name'];
 
 ?>
 
-<a href="/admin/list.php">Вернуться </a>
+<a href="/admin/admlist.php">Вернуться </a>
 <h2>Редактирование сотрудника <?php echo $name?></h2>
 <form action="<?php $_SERVER['PHP_SELF']?>" method="post">
 	Логин: <input type="text" name="login" value="<?php echo $login?>"><br/>
@@ -47,7 +47,7 @@ $name = $result['name'];
 	<input type="hidden" name="id" value="<?php echo $id?>">
 	<input type="submit" >
 	</form>
-	<a href="editformcli.php?id=<?php echo $id?>">Назад</a>
+	<a href="editformadm.php?id=<?php echo $id?>">Назад</a>
 
 <?php
 $mysqli->close();
