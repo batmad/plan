@@ -32,7 +32,7 @@ $monday = $myDate->reverseDate($array_week[0]);
 $saturday = $myDate->reverseDate($array_week[5]);
 
 
-$query="SELECT name,id FROM name WHERE `show_plan`='1' ORDER BY `weight` ";
+$query="SELECT name,id FROM name WHERE `show_plan`='1' AND `del`<>1 ORDER BY `weight`";
 $res = $mysqli->query($query);
 while ($ruk = $res->fetch_assoc()){
 	$ruks[] = $ruk;
@@ -46,7 +46,16 @@ foreach ($ruks as $row){
 		$dayBegin = $myDate->dateBegin($day);
 		$dayEnd = $myDate->dateEnd($day);
 
-		$query_todos = "SELECT descr, DATE_FORMAT(date, '%H:%i') AS hours,place,responsible FROM todo WHERE id_name=".$row['id']." AND `date` BETWEEN '$dayBegin' AND '$dayEnd' ORDER BY `date`";
+		$query_todos = "SELECT descr, 
+							   DATE_FORMAT(date, '%H:%i') AS hours,
+							   place,
+							   responsible 
+						FROM todo 
+						WHERE id_name=".$row['id']." 
+						AND `date` BETWEEN '$dayBegin' AND '$dayEnd' 
+						ORDER BY `date`
+					";
+						
 		$result2 = $mysqli->query($query_todos);
 		while($row2 = $result2->fetch_assoc()){
 			

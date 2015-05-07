@@ -32,7 +32,7 @@ $plan = array();
 
 
 
-$query_names = "SELECT name,id FROM name WHERE `show_plan`='1' ORDER BY weight";
+$query_names = "SELECT name,id FROM name WHERE `show_plan`='1' AND `del` <> 1 ORDER BY weight";
 $result = $mysqli->query($query_names);
 while ($row = $result->fetch_assoc()){
 	$rows[] = $row;

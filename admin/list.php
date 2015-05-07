@@ -6,11 +6,12 @@ include('checkauth.php');
 setlocale(LC_TIME,"ru_RU");
 $result = setlocale(LC_ALL, 'ru_RU.UTF-8');
 
+
 echo "<a href='/admin/index.php'><img src='/img/previous.png' title='Вернуться обратно'></a>";
 
 echo "<br/><br/><a href='/admin/addformcli.php'><img src='/img/add_person.png' title='Добавить сотрудника'></a>";
 
-$query_names = "SELECT n.name,n.id,n.weight,n.`show_plan`,n.id_dep,n.iptel,d.short AS dep FROM name AS n JOIN department AS d ON (id_dep = d.id)";
+$query_names = "SELECT n.name,n.id,n.weight,n.`show_plan`,n.id_dep,n.iptel,d.short AS dep FROM name AS n JOIN department AS d ON (id_dep = d.id) WHERE `del` <> 1 ORDER BY `id_dep`,`weight`";
 $result = $mysqli->query($query_names);
 while ($row = $result->fetch_assoc()){
 	$rows[] = $row;

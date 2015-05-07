@@ -18,6 +18,7 @@ $query = "SELECT `n`.`name`,
 		  FROM `name` AS `n` 
 		  LEFT JOIN `department` AS `d` 
 		  ON (`n`.`id_dep`=`d`.`id`) 
+		  WHERE `del` <> 1
 		  ORDER BY `n`.`id_dep`, `n`.`weight`";
 
 $result = $mysqli->query($query);

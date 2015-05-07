@@ -60,7 +60,7 @@ else{
 	echo "<a href='/admin'><img src='/img/previous.png' title='Вернуться обратно'></a>";
 }
 
-$query_names = "SELECT name,id FROM name";
+$query_names = "SELECT name,id FROM name WHERE del<>1 ORDER BY weight";
 
 $result = $mysqli->query($query_names);
 
@@ -69,13 +69,13 @@ while ($row = $result->fetch_assoc()){
 }
 
 
-$query_names = "SELECT `name`,`id` FROM `name` WHERE `id_dep` = '1' ";
+$query_names = "SELECT `name`,`id` FROM `name` WHERE `id_dep` = '1' AND `del` <> 1 ";
 $result = $mysqli->query($query_names);
 while ($row = $result->fetch_assoc()){
 	$zams[] = $row;
 }
 
-$query_names = "SELECT `name`,`id` FROM `name` WHERE `head` = '1'";
+$query_names = "SELECT `name`,`id` FROM `name` WHERE `head` = '1' AND `del` <> 1";
 $result = $mysqli->query($query_names);
 while ($row = $result->fetch_assoc()){
 	$ruks[] = $row;

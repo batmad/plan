@@ -1,7 +1,6 @@
 <?php
 header('Content-type: text/html; charset=utf-8');
 include($_SERVER['DOCUMENT_ROOT'].'/bd.php');
-include('date.php');
 include('checkauth.php');
 
 setlocale(LC_TIME,"ru_RU");
@@ -9,20 +8,23 @@ setlocale(LC_TIME,"ru_RU");
 $result = setlocale(LC_ALL, 'ru_RU.UTF-8');
 
 if (isset($_POST) && !empty($_POST)){
-$id = $_POST['id'];
-$name = $_POST['name'];
-$weight = $_POST['weight'];
-$show = $_POST['show'];
-$id_dep = $_POST['id_dep'];
-$iptel = $_POST['iptel'];
-$head = $_POST['head'];
 
-
-$query_names = "UPDATE name SET `name`='$name', `weight` = '$weight', `show_plan`='$show',`id_dep`='$id_dep', `iptel`='$iptel', `head`='$head' WHERE `id` = '$id'";
-$result = $mysqli->query($query_names);
-
-header("Location: http://$_SERVER[SERVER_ADDR]/admin/list.php");
-
+	$id = $_POST['id'];
+	$name = $_POST['name'];
+	$weight = $_POST['weight'];
+	$show = $_POST['show'];
+	$id_dep = $_POST['id_dep'];
+	$iptel = $_POST['iptel'];
+	$head = $_POST['head'];
+	
+	if(isset($_POST['del'])){
+		$query = "UPDATE `name` SET `del`=1 WHERE `id`='$id'";
+	}
+	else{
+		$query = "UPDATE name SET `name`='$name', `weight` = '$weight', `show_plan`='$show',`id_dep`='$id_dep', `iptel`='$iptel', `head`='$head' WHERE `id` = '$id'";
+	}
+	$result = $mysqli->query($query);
+	header("Location: http://$_SERVER[SERVER_ADDR]/admin/list.php");
 }
 
 
@@ -89,8 +91,9 @@ $head = $result['head'];
 	?>
 	</select><br/>
 	IP телефон: <input type="text" name="iptel" value="<?php echo $iptel?>"><br/>
-   	<input type="hidden" name="id" value="<?php echo $id?>">
-	<input type="submit">
+   	<input type="hidden" name="id" value="<?php echo $id?>"><br/>
+	<input type="submit" name="edit" value="Редактировать"><br/><br/><br/>
+	<input type="submit" name="del" value="Удалить">
 	</form>
 	<a href="changepwd.php?id=<?php echo $id?>">Изменить логин и пароль</a>
 

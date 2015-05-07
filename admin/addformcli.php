@@ -1,7 +1,6 @@
 <?php
 header('Content-type: text/html; charset=utf-8');
 include($_SERVER['DOCUMENT_ROOT'].'/bd.php');
-include('date.php');
 include('checkauth.php');
 
 setlocale(LC_TIME,"ru_RU");
@@ -26,7 +25,7 @@ header("Location: http://$_SERVER[SERVER_ADDR]/admin/list.php");
 
 }
 
-$query = "SELECT id,name FROM department";
+$query = "SELECT id,name FROM department ";
 $result = $mysqli->query($query);
 while ($row = $result->fetch_assoc()){
 	$rows[] = $row;

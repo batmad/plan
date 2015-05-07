@@ -21,10 +21,15 @@ if (isset($_POST) && !empty($_POST)){
 	$place = $_POST['place'];
 
 	$datetime = $myDate->datetime($date,$time);
-
-	$query_names = "UPDATE todo SET id_name='$name', date = '$datetime' ,descr = '$descr', id_name = '$name', place = '$place', responsible = '$responsible' WHERE id = '$id'";
-
-	$result = $mysqli->query($query_names);
+	
+	if(isset($_POST['del'])){
+		$query = "DELETE FROM `todo` WHERE `id`='$id'";
+	}
+	else{
+		$query = "UPDATE todo SET id_name='$name', date = '$datetime' ,descr = '$descr', id_name = '$name', place = '$place', responsible = '$responsible' WHERE id = '$id'";
+	}
+	
+	$result = $mysqli->query($query);
 	if ($nextweek=='yes'){
 		header("Location: http://$_SERVER[SERVER_ADDR]/admin/index.php?plan=nextweek");
 	}
@@ -86,7 +91,9 @@ while ($row = $result->fetch_assoc()){
     Ответственный: <input type="text" name="responsible" value="<?php echo $todo['responsible']?>"><br/>
 	<input type="hidden" name="id" value="<?php echo $id?>">
 	<input type="hidden" name="nextweek" value="<?php echo $nextweek ?>">
-	<input type="submit">
+
+	<input type="submit" name="edit" value="Редактировать"><br/><br/><br/>
+	<input type="submit" name="del" value="Удалить">
     </form>
 
 <?php
