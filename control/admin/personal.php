@@ -1,9 +1,6 @@
 <?php
-$month = date('m')-1;
-$year = date('Y');
-$day = date('t',mktime(0,0,0,$month,1,$year));
-$dayBegin = $year."-".$month."-01";
-$dayEnd = $year."-".$month."-".$day;
+
+
 
 header('Content-type: text/html; charset=utf-8');
 include($_SERVER['DOCUMENT_ROOT'].'/bd.php');
@@ -13,6 +10,10 @@ if(isset($_GET) && !empty($_GET)){
 	$id = $_GET['id'];
 	$month = $_GET['month'];
 }
+$year = date('Y');
+$day = date('t',mktime(0,0,0,$month,1,$year));
+$dayBegin = $year."-".$month."-01";
+$dayEnd = $year."-".$month."-".$day;
 
 $query= "SELECT `c`.`id`,
 				`c`.`spec_id`,

@@ -6,7 +6,8 @@ include('checkauth.php');
 setlocale(LC_TIME,"ru_RU");
 $result = setlocale(LC_ALL, 'ru_RU.UTF-8');
 
-
+//$password = password_hash('',PASSWORD_DEFAULT);
+//echo $password;
 echo "<a href='/admin/index.php'><img src='/img/previous.png' title='Вернуться обратно'></a>";
 
 echo "<br/><br/><a href='/admin/addformcli.php'><img src='/img/add_person.png' title='Добавить сотрудника'></a>&nbsp;&nbsp;";

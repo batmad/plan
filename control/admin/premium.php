@@ -1,7 +1,7 @@
 <?php
 
 $year = date('Y');
-$month = "04";
+$month = "05";
 $day = date('t',mktime(0,0,0,$month,1,$year));
 $dayBegin = $year."-".$month."-01";
 $dayEnd = $year."-".$month."-".$day;
@@ -36,6 +36,7 @@ $result = $mysqli->query($query);
 
 
 while ($row = $result->fetch_assoc()){
+
 	foreach ($specs as $spec){
 		//Если специалист равен искомому специалисту
 		if ($spec['id'] == $row['spec_id']){
@@ -77,8 +78,9 @@ while ($row = $result->fetch_assoc()){
 						$interval = $datetime1->diff($datetime2);
 						$days_with_symbol = $interval->format('%R%a');
 						$days_without_symbol = $interval->format('%a');
-						//echo $row['performed']."    ".$days_without_symbol."<br/>";
-						//echo $row['date']."    ".$row['day_performed']."<br/>";
+						echo $row['id'];
+						echo "performed - ".$row['performed']."    ".$days_without_symbol."<br/>";
+						echo "date - ".$row['date']."    ".$row['day_performed']."<br/>";
 						$ctrl["$dep_id"]['dead_ctrl'] = $ctrl["$dep_id"]['dead_ctrl'] + 1;
 						$ctrl["$dep_id"]['days_pros'] = $ctrl["$dep_id"]['days_pros'] + $days_without_symbol;
 					}
@@ -125,6 +127,12 @@ while ($row = $result->fetch_assoc()){
 	}
 }
 
+$query= "SELECT `c`.`date`,`c`.`day_performed` FROM `control` AS `c` WHERE ((`c`.`day_performed` BETWEEN '$dayBegin' AND '$dayEnd') OR (`c`.`date` BETWEEN '$dayBegin' AND '$dayEnd') OR ((`c`.`date` BETWEEN '0000-00-00' AND '$dayEnd') AND `c`.`ctrl`='0')) AND (`c`.`day_performed`='0000-00-00' AND `c`.`ctrl`='0')";
+$result = $mysqli->query($query);
+while ($row = $result->fetch_assoc()){
+	$rows[] = $row;
+}
+print_r($rows);
 
 
 foreach ($specs as $ruk){
