@@ -1,10 +1,72 @@
 <?php
+include($_SERVER['DOCUMENT_ROOT'].'/bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'/date.php');
+header('Content-type: text/html; charset=utf-8');
+echo "<a href='/control/admin'><img src='/img/previous.png' title='Вернуться обратно'></a><br/><br/>";
+
+if (isset($_POST) && !empty($_POST)){
+	$date = $_POST['date'];
+	$query = "INSERT INTO `closed_premium` (`date`) VALUES('$date')";
+	$result = $mysqli->query($query);
+	$id_closed_premium = $mysqli->insert_id;
+	foreach($_POST['data'] as $key=>$value){
+		foreach ($value as $k=>$v){
+			$data[$key][$k] = $v;
+		}
+		$days_pros = $data[$key]['days_pros'];
+		$total = $data[$key]['total'];
+		$dead_ctrl = $data[$key]['dead_ctrl'];
+		$ctrl = $data[$key]['ctrl'];
+		$name = $data[$key]['name'];
+		$sort = $data[$key]['sort'];
+		$spec_id = $data[$key]['id'];
+		$percent = $data[$key]['percent'];
+		$premium = $data[$key]['premium'];
+		$query = "INSERT INTO `premium` (`days_pros`,
+										`total`,
+										`dead_ctrl`,
+										`ctrl`,
+										`name`,
+										`sort`,
+										`spec_id`,
+										`percent`,
+										`premium`,
+										`id_closed_premium`)
+
+				VALUES(					'$days_pros',
+							  			'$total',
+							  			'$dead_ctrl',
+							  			'$ctrl',
+							  			'$name',
+							  			'$sort',
+							  			'$spec_id',
+							  			'$percent',
+							  			'$premium',
+							  			'$id_closed_premium'
+				  	)";
+		$result = $mysqli->query($query);
+	}
+}
+
+$search = date('Y')."-".date('m');
+$sql = "SELECT EXISTS (SELECT * FROM `closed_premium` WHERE date = '{$search}')";
+$result = $mysqli->query($sql); 
+$closed_premium = $result->fetch_row();
+$myDate = new mDate();
+
+
+
+
+
 
 $year = date('Y');
-$month = "05";
+$month = date('m');
 $day = date('t',mktime(0,0,0,$month,1,$year));
 $dayBegin = $year."-".$month."-01";
 $dayEnd = $year."-".$month."-".$day;
+
+
+echo "<h2>Премия за ".$myDate->monthRus($month+0)." ".$year."г.</h2>";
 
 function cmp($a, $b) {
   return $a["sort"] - $b["sort"];
@@ -16,9 +78,7 @@ $_SESSION['date'] = '';
 $_SESSION['descr'] = '';
 
 
-header('Content-type: text/html; charset=utf-8');
-include($_SERVER['DOCUMENT_ROOT'].'/bd.php');
-echo "<a href='/control/admin'><img src='/img/previous.png' title='Вернуться обратно'></a><br/><br/>";
+
 
 
 $query = "SELECT n.name,n.id,n.head,n.id_dep,n.weight FROM name AS n ORDER BY weight";
@@ -184,7 +244,7 @@ echo "<tr><th>Специалист</th>
 		  <th>Проценты</th>
 		  <th>Премия</th>";
 
-foreach ($ctrl as $c){
+foreach ($ctrl as $k => $c){
 	echo "<tr>";
 	echo "<td><a href='personal.php?month=".$month."&id=".$c['id']."'>".$c['name']."</a></td>";
 	
@@ -216,15 +276,42 @@ foreach ($ctrl as $c){
 	if ($percent > 100) $percent = 100;
 	echo $percent;
 	echo "</td>";
-	
+	$ctrl[$k]['percent']=$percent;
 	echo "<td>";
 	$premium = round((100 - $percent)*35.83/100,2);
 	if ($premium < 0) $premium = 0;
 	echo $premium;
+	$ctrl[$k]['premium']=$premium;
 	echo "</td>";
 	
 	echo "</tr>";
 }
 echo "</table>";
 
+
+
+?>
+<form action="<?php $_SERVER['PHP_SELF']?>" method="post">
+<input type="hidden" name="date" value="<?php echo $search ?>">
+<input type="hidden" name="arr" value="$ctrl">
+<?php
+foreach($ctrl as $key=>$value){
+	foreach ($value as $k=>$v){
+
+		echo "<input type='hidden' name='data[".$key."][".$k."]"."' value='$v'>";
+	}	
+
+}
+?>
+
+</form>
+<?php
+
+if ($closed_premium[0])
+{
+	echo "<h2>Текущий месяц закрыт</h2>";
+}
+else {
+	echo "<input type='submit' name='button1' value='Закрыть расчетный месяц'>";
+}
 ?>
