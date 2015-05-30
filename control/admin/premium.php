@@ -29,7 +29,22 @@ while ($row = $result->fetch_assoc()){
 
 //$query= "SELECT `c`.`id`,`c`.`spec_id`,`c`.`date`,`c`.`ctrl`,`c`.`performed`,`c`.`day_performed`,`n`.`id_dep`,`n`.`weight` FROM `control` AS `c` LEFT JOIN `name` AS `n` ON (`c`.`spec_id`=`n`.`id`) WHERE `c`.`date` LIKE '$year-$month-%' OR `c`.`day_performed` LIKE '$year-$month-%' ORDER BY `n`.`id_dep`,`n`.`weight` ";
 //$query= "SELECT `c`.`id`,`c`.`spec_id`,`c`.`date`,`c`.`ctrl`,`c`.`performed`,`c`.`day_performed`,`n`.`id_dep`,`n`.`weight` FROM `control` AS `c` LEFT JOIN `name` AS `n` ON (`c`.`spec_id`=`n`.`id`) WHERE `c`.`day_performed` LIKE '$year-$month-%' OR ((`c`.`date` BETWEEN '0000-00-00' AND '$year-$month-$day') AND `c`.`ctrl`='0') ORDER BY `n`.`id_dep`,`n`.`weight` ";
-$query= "SELECT `c`.`id`,`c`.`spec_id`,`c`.`date`,`c`.`ctrl`,`c`.`performed`,`c`.`day_performed`,`n`.`id_dep`,`n`.`weight` FROM `control` AS `c` LEFT JOIN `name` AS `n` ON (`c`.`spec_id`=`n`.`id`) WHERE (`c`.`day_performed` BETWEEN '$dayBegin' AND '$dayEnd') OR (`c`.`date` BETWEEN '$dayBegin' AND '$dayEnd') OR ((`c`.`date` BETWEEN '0000-00-00' AND '$dayEnd') AND `c`.`ctrl`='0') ORDER BY `n`.`id_dep`,`n`.`weight` ";
+$query= "SELECT `c`.`id`,
+				`c`.`spec_id`,
+				`c`.`date`,
+				`c`.`ctrl`,
+				`c`.`performed`,
+				`c`.`day_performed`,
+				`n`.`id_dep`,
+				`n`.`weight` 
+		FROM `control` AS `c` 
+		LEFT JOIN `name` AS `n` 
+		ON (`c`.`spec_id`=`n`.`id`) 
+		WHERE (`c`.`day_performed` BETWEEN '$dayBegin' AND '$dayEnd') 
+		OR (`c`.`date` BETWEEN '$dayBegin' AND '$dayEnd') 
+		OR ((`c`.`date` BETWEEN '0000-00-00' AND '$dayEnd') AND `c`.`ctrl`='0') 
+		ORDER BY `n`.`id_dep`,`n`.`weight` ";
+
 $result = $mysqli->query($query);
 
 
@@ -64,50 +79,33 @@ while ($row = $result->fetch_assoc()){
 			//Если контроль равен 1, т.е. исполнено, то приравнием количество поручений
 			//иначе записываем количество не исполненных
 			if ($row['ctrl']){
-				if ($row['performed']){
-					$dates = explode('-',$row['date']);
-					//$date1 = $dates[2]."-".$dates[1]."-".$dates[0];
-					$date1 = $row['date'];
-					//echo $dates[1];
-					//echo $row['date']."<br/>";
-					if ($dates[1] < $month){
-						$date1 = $dates[0]."-".$month."-00";
-						$date2 = $row['day_performed'];
-						$datetime1 = new DateTime($date1);
-						$datetime2 = new DateTime($date2);
-						$interval = $datetime1->diff($datetime2);
-						$days_with_symbol = $interval->format('%R%a');
-						$days_without_symbol = $interval->format('%a');
-						echo $row['id'];
-						echo "performed - ".$row['performed']."    ".$days_without_symbol."<br/>";
-						echo "date - ".$row['date']."    ".$row['day_performed']."<br/>";
-						$ctrl["$dep_id"]['dead_ctrl'] = $ctrl["$dep_id"]['dead_ctrl'] + 1;
-						$ctrl["$dep_id"]['days_pros'] = $ctrl["$dep_id"]['days_pros'] + $days_without_symbol;
-					}
-					else{
-						$ctrl["$dep_id"]['dead_ctrl'] = $ctrl["$dep_id"]['dead_ctrl'] + 1;
-						$ctrl["$dep_id"]['days_pros'] = $ctrl["$dep_id"]['days_pros'] + $row['performed'];
-					}
+				if ($row['performed']){			
+					$ctrl["$dep_id"]['dead_ctrl'] = $ctrl["$dep_id"]['dead_ctrl'] + 1;
+					$ctrl["$dep_id"]['days_pros'] = $ctrl["$dep_id"]['days_pros'] + $row['performed'];
 				}
 				else{
 					$ctrl["$dep_id"]['ctrl'] = $ctrl["$dep_id"]['ctrl'] + 1;
 				}
 			}
 			else {
-				//Если текущий месяц не равен месяцу из запроса,
-				//то берем месяц и год из запроса и максимально 
-				//возможный день в этом месяце.
-				//И считаем разницу между датой в поручении и 
-				//датой на текущий день или максимальный день месяца из запроса
+				/**********************
+				Если 'год поручения'-'месяц поручения' не равен 'текущий год'-'расчетный месяц',
+				тогда приравниваем date1 = текущий год - расчетный месяц - 01
+				т.к. априори в запросе в БД - месяц и год срока поручения не могут быть выше 
+				расчетного месяца и текущего года.
+				Это необходимо в связи с тем, срок поручения как бы устанавливается
+				равным началу месяца, потому что у исполнителя в предыдущем месяце была списана 
+				премия по прошлому расчетному периоду.
+				date2 = текущий год - расчетный месяц - максимальный день 
+				Считаем разницу между date1 и date2
+				Если разница положительная в пользу date2
+				********************/
 				$date1 = $row['date'];
 				$dates = explode('-',$row['date']);
-				//$date1 = $dates[2]."-".$dates[1]."-".$dates[0];
-				if ($dates[1] < $month){
-					$date2 = $dates[0]."-".$month."-".$day;
+				if ($dates[0]."-".$dates[1] != $year."-".$month){
+					$date1 = $year."-".$month."-01";
 				}
-				else{
-					$date2 = date('Y-m-d');
-				}
+				$date2 = $year."-".$month."-".$day;
 				$datetime1 = new DateTime($date1);
 				$datetime2 = new DateTime($date2);
 				$interval = $datetime1->diff($datetime2);
@@ -127,12 +125,6 @@ while ($row = $result->fetch_assoc()){
 	}
 }
 
-$query= "SELECT `c`.`date`,`c`.`day_performed` FROM `control` AS `c` WHERE ((`c`.`day_performed` BETWEEN '$dayBegin' AND '$dayEnd') OR (`c`.`date` BETWEEN '$dayBegin' AND '$dayEnd') OR ((`c`.`date` BETWEEN '0000-00-00' AND '$dayEnd') AND `c`.`ctrl`='0')) AND (`c`.`day_performed`='0000-00-00' AND `c`.`ctrl`='0')";
-$result = $mysqli->query($query);
-while ($row = $result->fetch_assoc()){
-	$rows[] = $row;
-}
-print_r($rows);
 
 
 foreach ($specs as $ruk){
@@ -184,7 +176,13 @@ usort($ctrl, "cmp");
 
 
 echo "<table border='1'>";
-echo "<tr><th>Специалист</th><th>Всего</th><th>В срок</th><th>Просрочено</th><th>Сумма дней просрочки</th><th>Проценты</th><th>Премия</th>";
+echo "<tr><th>Специалист</th>
+		  <th>Всего</th>
+		  <th>В срок</th>
+		  <th>Просрочено</th>
+		  <th>Сумма дней просрочки</th>
+		  <th>Проценты</th>
+		  <th>Премия</th>";
 
 foreach ($ctrl as $c){
 	echo "<tr>";
