@@ -1,7 +1,8 @@
 <?php
 
-$year = date('Y');
-$month = "05";
+//$year = date('Y');
+$year = "2015";
+$month = "12";
 $day = date('t',mktime(0,0,0,$month,1,$year));
 $dayBegin = $year."-".$month."-01";
 $dayEnd = $year."-".$month."-".$day;

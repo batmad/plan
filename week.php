@@ -14,10 +14,12 @@ $first_year = 2014;
 if (isset($_GET) && !empty($_GET)){
 	$year = $_GET['year'];
 	$current_week = 1;
+	$old_year = true;
 }
 else{
 	$year = date('Y');
 	$current_week = date('W');
+	$old_year = false;
 }
 
 $week_number = 0;
@@ -43,15 +45,17 @@ for ($i = $first_year; $i < $year; $i++){
 //Если дата которую мы отправляем равна воскресенью, тогда записываем в
 //промежуточную перменную $week_number номер недели
 //И затем если $number_week меньше или равно текущему номеру недели
-//записываем все в массив $week, иначе прекращаем все
+//записываем все в массив $week
 //ВНИМАНИЕ НЕ ИСПОЛЬЗОВАТЬ WHILE, при сравнении номера недели
+
 
 foreach($months as $month=>$day){
 	$i = 1;
 	while($i <=$day){
 		if (date('N',mktime(1,1,1,$month,$i,$year))==7){
 			$week_number = date('W',mktime(1,1,1,$month,$i,$year));
-			if ($current_week == 1){
+
+			if ($old_year){
 					$week[$week_number]['start']=date('d-m-Y',mktime(1,1,1,$month,$i-6,$year));
 					$week[$week_number]['end']=date('d-m-Y',mktime(1,1,1,$month,$i,$year));
 					$week[$week_number]['month']=$months_rus["$month"];
@@ -59,16 +63,13 @@ foreach($months as $month=>$day){
 					$week[$week_number]['day_number']=$i;
 			}
 			else {
-				if($week_number<=$current_week){
+				if($week_number<$current_week){
 					$week[$week_number]['start']=date('d-m-Y',mktime(1,1,1,$month,$i-6,$year));
 					$week[$week_number]['end']=date('d-m-Y',mktime(1,1,1,$month,$i,$year));
 					$week[$week_number]['month']=$months_rus["$month"];
 					$week[$week_number]['month_number']=$month;
 					$week[$week_number]['day_number']=$i;
-				}
-				else{
-					break;
-				}
+				}				
 			}
 		}
 		$i++;
