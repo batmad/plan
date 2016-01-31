@@ -24,13 +24,14 @@ if (isset($_POST) && !empty($_POST)){
 	$datetime = $myDate->datetime($date,$time);
 	$responsible = $_POST['responsible'];
 	$place = $_POST['place'];
+	$aktzal = $_POST['aktzal'];
 
 	foreach($_POST['add'] as $add){
-		$query_names = "INSERT INTO todo(id_name,date,descr,responsible,place) VALUES ('$add','$datetime','$descr','$responsible','$place')";
+		$query_names = "INSERT INTO todo(id_name,date,descr,responsible,place,place_id) VALUES ('$add','$datetime','$descr','$responsible','$place','$aktzal')";
 		$result = $mysqli->query($query_names);
 	}
 
-	$query_names = "INSERT INTO todo(id_name,date,descr,responsible,place) VALUES ('$name','$datetime','$descr','$responsible','$place')";
+	$query_names = "INSERT INTO todo(id_name,date,descr,responsible,place,place_id) VALUES ('$name','$datetime','$descr','$responsible','$place','$aktzal')";
 	$result = $mysqli->query($query_names);
 	
 	if ($nextweek=='yes'){
@@ -81,6 +82,11 @@ while ($row = $result->fetch_assoc()){
 	$ruks[] = $row;
 }
 
+$query_names = "SELECT name,id FROM place";
+$result = $mysqli->query($query_names);
+$rowplace = $result->fetch_assoc();
+$aktzal = $rowplace['name'];
+$aktzalID = $rowplace['id'];
 
 ?>
 <h2>Добавление мероприятия</h2>
@@ -128,6 +134,7 @@ while ($row = $result->fetch_assoc()){
 	</div>
     <br/>Мероприятие: <br/><textarea name="descr" cols="100" rows="10"></textarea><br/>
     Место: <input type="text" name="place" value=""><br/>
+	Акт.зал: <input type='checkbox' name='aktzal' value="<?php echo $aktzalID ?>"><br/>
     Ответственный: <input type="text" name="responsible" value=""><br/>
 	<input type="hidden" name="nextweek" value="<?php echo $nextweek ?>">
 	<input type="submit">

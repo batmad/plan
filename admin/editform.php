@@ -19,6 +19,7 @@ if (isset($_POST) && !empty($_POST)){
 	$time = $_POST['time'];
 	$responsible = $_POST['responsible'];
 	$place = $_POST['place'];
+	$aktzal = $_POST['aktzal'];
 
 	$datetime = $myDate->datetime($date,$time);
 	
@@ -26,7 +27,7 @@ if (isset($_POST) && !empty($_POST)){
 		$query = "DELETE FROM `todo` WHERE `id`='$id'";
 	}
 	else{
-		$query = "UPDATE todo SET id_name='$name', date = '$datetime' ,descr = '$descr', id_name = '$name', place = '$place', responsible = '$responsible' WHERE id = '$id'";
+		$query = "UPDATE todo SET id_name='$name', date = '$datetime' ,descr = '$descr', id_name = '$name', place = '$place', responsible = '$responsible', place_id = '$aktzal' WHERE id = '$id'";
 	}
 	
 	$result = $mysqli->query($query);
@@ -47,7 +48,7 @@ if (isset($_GET) && !empty($_GET)){
 	else{
 		$nextweek = "no";
 	}
-	$query = "SELECT descr,DATE_FORMAT(date, '%H:%i') AS hours,DATE_FORMAT(date, '%d-%m-%Y') AS date,id_name,place,responsible FROM todo WHERE id='$id'";
+	$query = "SELECT descr,DATE_FORMAT(date, '%H:%i') AS hours,DATE_FORMAT(date, '%d-%m-%Y') AS date,id_name,place,responsible,place_id FROM todo WHERE id='$id'";
 	$res = $mysqli->query($query);
 	
 	$todo = $res->fetch_assoc();
@@ -64,6 +65,11 @@ while ($row = $result->fetch_assoc()){
 	$rows[] = $row;
 }
 
+$query_names = "SELECT name,id FROM place";
+$result = $mysqli->query($query_names);
+$rowplace = $result->fetch_assoc();
+$aktzal = $rowplace['name'];
+$aktzalID = $rowplace['id'];
 
 
 
@@ -88,6 +94,7 @@ while ($row = $result->fetch_assoc()){
 	Время: <input type="time" name="time" value="<?php echo $todo['hours']?>"><br/>
     Мероприятие: <br/><textarea name="descr" cols="100" rows="10"><?php echo $todo['descr'] ?></textarea><br/>
     Место: <input type="text" name="place" value="<?php echo htmlspecialchars($todo['place'])?>"><br/>
+    Акт. зал: <input type="checkbox" name="aktzal" value="<?php echo $aktzalID ?>"  <?php if($todo['place_id']) echo " checked"; ?> ><br/>
     Ответственный: <input type="text" name="responsible" value="<?php echo $todo['responsible']?>"><br/>
 	<input type="hidden" name="id" value="<?php echo $id?>">
 	<input type="hidden" name="nextweek" value="<?php echo $nextweek ?>">

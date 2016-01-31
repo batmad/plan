@@ -12,14 +12,13 @@ if (isset($_POST) && !empty($_POST)){
 
 	$id = $_POST['id'];
 	$name = $_POST['name'];
-	$short = $_POST['short'];
 
 	
 	if(isset($_POST['del'])){
-		$query = "DELETE FROM `department` WHERE `id`='$id'";
+		$query = "DELETE FROM `place` WHERE `id`='$id'";
 	}
 	else{
-		$query = "UPDATE department SET `name`='$name',`short`='$short' WHERE `id` = '$id'";
+		$query = "UPDATE place SET `name`='$name' WHERE `id` = '$id'";
 	}
 	$result = $mysqli->query($query);
 	header("Location: http://$_SERVER[SERVER_ADDR]/admin/deplist.php");
@@ -32,23 +31,22 @@ if (isset($_GET) && !empty($_GET)){
 }
 
 
-$query = "SELECT name, short FROM department WHERE `id` = '$id'";
+$query = "SELECT name FROM place WHERE `id` = '$id'";
 $result = $mysqli->query($query);
 $result = $result->fetch_assoc();
 $name = $result['name'];
-$short = $result['short'];
+
 
 ?>
 <a href="/admin/list.php">Вернуться </a>
-<h2>Редактирование структурного подразделения</h2>
+<h2>Редактирование места проведения совещания</h2>
 <form action="<?php $_SERVER['PHP_SELF']?>" method="post">
-    ФИО: <input type="text" name="name" value="<?php echo $name ?>"><br/>
-	Login: <input type="text" name="short" value="<?php echo $short ?>"><br/>
+    Место: <input type="text" name="name" value="<?php echo $name ?>"><br/>
    	<input type="hidden" name="id" value="<?php echo $id?>"><br/>
 	<input type="submit" name="edit" value="Редактировать"><br/><br/><br/>
 	<input type="submit" name="del" value="Удалить">
 	</form>
-	<a href="changepwdadm.php?id=<?php echo $id?>">Изменить пароль</a>
+
 
 <?php
 $mysqli->close();

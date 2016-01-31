@@ -56,6 +56,8 @@ while ($row = $result->fetch_assoc()){
     </form>
 
 <?php
+$password = password_hash('123456',PASSWORD_DEFAULT);
+echo $password;
 $mysqli->close();
 ?>
 

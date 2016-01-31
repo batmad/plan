@@ -11,7 +11,7 @@ echo "<a href='/admin/list.php'><img src='/img/previous.png' title='Вернут
 
 include('admineditbar.php');
 
-$query_names = "SELECT name,short,id FROM department";
+$query_names = "SELECT name,id FROM place";
 $result = $mysqli->query($query_names);
 while ($row = $result->fetch_assoc()){
 	$rows[] = $row;
@@ -28,7 +28,7 @@ echo "<br/>";
 echo "<table border=1><th>Ф.И.О.</th><th>Редактировать</th>";
 foreach ($rows as $row){
 	echo "<tr><td valign='top'>".$row['name']."</td>";
-	echo "<td valign='top'><a href='/admin/editformdep.php?id=".$row['id']."'><img src='/img/edit.png' title='Редактировать'></a></td></tr>";
+	echo "<td valign='top'><a href='/admin/editformplace.php?id=".$row['id']."'><img src='/img/edit.png' title='Редактировать'></a></td></tr>";
 }
 
 	

@@ -6,15 +6,10 @@ include('checkauth.php');
 setlocale(LC_TIME,"ru_RU");
 $result = setlocale(LC_ALL, 'ru_RU.UTF-8');
 
-$password = password_hash('12345',PASSWORD_DEFAULT);
-echo $password;
+
 echo "<a href='/admin/index.php'><img src='/img/previous.png' title='Вернуться обратно'></a>";
 
-echo "<br/><br/><a href='/admin/addformcli.php'><img src='/img/add_person.png' title='Добавить сотрудника'></a>&nbsp;&nbsp;";
-echo "<a href='/admin/addformclitech.php'><img src='/img/add_person_tech.png' title='Добавить администратора'></a>&nbsp;&nbsp;";
-echo "<a href='/admin/admlist.php'><img src='/img/edit_person_tech.png' title='Редактировать администраторов'></a>&nbsp;&nbsp;";
-echo "<a href='/admin/addformdep.php'><img src='/img/add_department.png' title='Добавить департамент'></a>&nbsp;&nbsp;";
-echo "<a href='/admin/deplist.php'><img src='/img/edit_department.png' title='Редактировать департаменты'></a>&nbsp;&nbsp;";
+include('admineditbar.php');
 
 $query_names = "SELECT n.name,n.id,n.weight,n.`show_plan`,n.id_dep,n.iptel,d.short AS dep FROM name AS n JOIN department AS d ON (id_dep = d.id) WHERE `del` <> 1 ORDER BY `id_dep`,`weight`";
 $result = $mysqli->query($query_names);
