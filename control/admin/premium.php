@@ -59,8 +59,12 @@ $myDate = new mDate();
 
 
 
-$year = date('Y');
-$month = date('m');
+
+//$year = date('Y');
+//$month = date('m');
+$year = "2015";
+$month = "12";
+
 $day = date('t',mktime(0,0,0,$month,1,$year));
 $dayBegin = $year."-".$month."-01";
 $dayEnd = $year."-".$month."-".$day;

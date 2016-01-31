@@ -10,7 +10,9 @@ if(isset($_GET) && !empty($_GET)){
 	$id = $_GET['id'];
 	$month = $_GET['month'];
 }
-$year = date('Y');
+
+//$year = date('Y');
+$year = "2015";
 $day = date('t',mktime(0,0,0,$month,1,$year));
 $dayBegin = $year."-".$month."-01";
 $dayEnd = $year."-".$month."-".$day;

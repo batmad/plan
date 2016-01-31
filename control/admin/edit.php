@@ -16,19 +16,37 @@ if (isset($_POST) && !empty($_POST)){
 		$comment = $_POST['comment'];
 		$day_performed = correct_date($_POST['day_performed']);
 		$performed = $_POST['performed'];
-	
 		//Если поменялся Департамент, то обнуляем id специалиста
 		$query = "SELECT dep_id FROM control WHERE id='$id'";
 		$result = $mysqli->query($query);
 		$row = $result->fetch_assoc();
 		if ($row['dep_id']==$dep_id){
-			$query = "UPDATE `control` SET `descr`='$descr',`date`='$date',`ctrl`='$ctrl',`dep_id`='$dep_id', `comment`='$comment',`answer`='$answer',`performed`='$performed',`day_performed`='$day_performed'  WHERE `id`='$id'";
+			$query = "UPDATE `control` 
+					  SET `descr`='$descr',
+						  `date`='$date',
+						  `ctrl`='$ctrl',
+						  `dep_id`='$dep_id', 
+						  `comment`='$comment',
+						  `answer`='$answer',
+						  `performed`='$performed',
+						  `day_performed`='$day_performed'  
+				      WHERE `id`='$id'";
 		}
 		else{
-			$query = "UPDATE `control` SET `descr`='$descr',`date`='$date',`ctrl`='$ctrl',`dep_id`='$dep_id', `spec_id`='', `comment`='$comment',`answer`='$answer',`performed`='$performed',`day_performed`='$day_performed'  WHERE `id`='$id'";
+			$query = "UPDATE `control` 
+					  SET `descr`='$descr',
+						  `date`='$date',
+						  `ctrl`='$ctrl',
+						  `dep_id`='$dep_id', 
+						  `spec_id`='', 
+						  `comment`='$comment',
+						  `answer`='$answer',
+						  `performed`='$performed',
+						  `day_performed`='$day_performed'  
+					  WHERE `id`='$id'";
 		}
 		$result = $mysqli->query($query);
-		if ($_SESSION['is_entering_item']){
+		if (isset($_SESSION['is_entering_item']) && !empty($_SESSION['is_entering_item'])){
 			header("Location:http://$_SERVER[SERVER_ADDR]/control/admin/add.php?id=$sid");
 		}
 		else{
@@ -52,6 +70,10 @@ if (isset($_POST) && !empty($_POST)){
 		else{
 			header("Location:http://$_SERVER[SERVER_ADDR]/control/admin/");
 		}
+	}
+	else if(isset($_POST['button3'])){
+		$_SESSION['is_entering_item'] = false;
+		header("Location:http://$_SERVER[SERVER_ADDR]/control/admin/");
 	}
 	else {
 		echo "Ошибка";
@@ -94,8 +116,11 @@ $item = $result->fetch_assoc();
 
 
 ?>
+<form action=<?php echo $_SERVER['PHP_SELF'] ?> method='post'>
+<input type='hidden' name='id' value='$id'>
+<input type='submit' name='button3' value='Вернуться назад'>
+</form>
 
-<a href="/control/admin/index.php">Вернуться </a>
 <h2>Редактирование поручения</h2>
 <form action="<?php $_SERVER['PHP_SELF']?>" method="post">
 
@@ -164,7 +189,7 @@ if (!empty($sims)){
 
 	$i=1;
 	foreach($sims as $sim){
-		echo "<tr><td>$i</td><td>".$sim['descr']."</td><td><a href=\"edit.php?id=".$sim['id']."\">Редактировать</td></tr>";
+		echo "<tr><td>$i</td><td>".$sim['descr']."</td><td><a href=\"edit.php?id=".$sim['id']."&sid=$ctrl_id\">Редактировать</td></tr>";
 		$i++;
 	}
 

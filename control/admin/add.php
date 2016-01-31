@@ -22,7 +22,8 @@ if (isset($_POST) && !empty($_POST)){
 		$result = $mysqli->query($query);
 		
 		if($_SESSION['is_entering_item']){
-			header("Location:http://$_SERVER[SERVER_ADDR]/control/admin/add.php?id=$id");
+			
+			header("Location:http://".$_SERVER['SERVER_ADDR']."/control/admin/add.php?id=$id");
 			exit();
 		}
 		else{
@@ -59,8 +60,11 @@ while ($row = $result->fetch_assoc()){
 	$deps[] = $row;
 }
 ?>
+<form action=<?php echo $_SERVER['PHP_SELF'] ?> method='post'>
+<input type='hidden' name='id' value='$id'>
+<input type='submit' name='button2' value='Вернуться назад'>
+</form>
 
-<a href="/control/admin/index.php">Вернуться </a>
 <h2>Новое поручение</h2>
 <form action="<?php echo $_SERVER['PHP_SELF']?>" method="post" onsubmit="return postin();">
 <?php

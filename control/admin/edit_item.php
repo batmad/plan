@@ -18,6 +18,10 @@ if (isset($_POST) && !empty($_POST)){
 		$result = $mysqli->query($query);
 		header("Location:http://$_SERVER[SERVER_ADDR]/control/admin/");
 	}
+	if(isset($_POST['button3'])){
+		$_SESSION['is_entering_item'] = false;
+		header("Location:http://$_SERVER[SERVER_ADDR]/control/admin/");
+	}
 }
 
 if (isset($_GET) && !empty($_GET)){
@@ -31,7 +35,10 @@ $row = $result->fetch_assoc();
 
 ?>
 
-<a href="/control/admin/index.php">Вернуться </a>
+<form action=<?php echo $_SERVER['PHP_SELF'] ?> method='post'>
+<input type='hidden' name='id' value='$id'>
+<input type='submit' name='button3' value='Вернуться назад'>
+</form>
 <h2>Редактирование поручения</h2>
 <form action="<?php $_SERVER['PHP_SELF']?>" method="post">
 
