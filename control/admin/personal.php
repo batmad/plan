@@ -11,8 +11,8 @@ if(isset($_GET) && !empty($_GET)){
 	$month = $_GET['month'];
 }
 
-//$year = date('Y');
-$year = "2015";
+$year = date('Y');
+//$year = "2015";
 $day = date('t',mktime(0,0,0,$month,1,$year));
 $dayBegin = $year."-".$month."-01";
 $dayEnd = $year."-".$month."-".$day;

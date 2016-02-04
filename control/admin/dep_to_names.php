@@ -2,7 +2,7 @@
 include($_SERVER['DOCUMENT_ROOT'].'/bd.php');
 $d = $_POST["depSelOpt"];
 
-$query = "SELECT name,id FROM name WHERE id_dep='$d'";
+$query = "SELECT name,id FROM name WHERE id_dep='$d' AND del<>1";
 $result = $mysqli->query($query);
 
 while ($row = $result->fetch_assoc()){

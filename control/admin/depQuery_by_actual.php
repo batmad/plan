@@ -136,7 +136,7 @@ while ($row = $result->fetch_assoc()){
 	}
 	
 	$specs =array();
-	$query="SELECT name,id FROM name WHERE id_dep=".$row['dep_id'];
+	$query="SELECT name,id FROM name WHERE del<>1 AND id_dep=".$row['dep_id'];
 		$res = $mysqli->query($query);
 		while ($spec = $res->fetch_assoc()){
 		$specs[] = $spec;
