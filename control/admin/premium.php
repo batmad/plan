@@ -48,11 +48,11 @@ if (isset($_POST) && !empty($_POST)){
 	}
 }
 
-$search = date('Y')."-".date('m');
-$sql = "SELECT EXISTS (SELECT * FROM `closed_premium` WHERE date = '{$search}')";
-$result = $mysqli->query($sql); 
-$closed_premium = $result->fetch_row();
-$myDate = new mDate();
+//$search = date('Y')."-".date('m');
+//$sql = "SELECT EXISTS (SELECT * FROM `closed_premium` WHERE date = '{$search}')";
+//$result = $mysqli->query($sql); 
+//$closed_premium = $result->fetch_row();
+//$myDate = new mDate();
 
 
 
@@ -62,15 +62,15 @@ $myDate = new mDate();
 
 //$year = date('Y');
 //$month = date('m');
-$year = "2015";
-$month = "12";
+$year = "2016";
+$month = "01";
 
 $day = date('t',mktime(0,0,0,$month,1,$year));
 $dayBegin = $year."-".$month."-01";
 $dayEnd = $year."-".$month."-".$day;
 
 
-echo "<h2>Премия за ".$myDate->monthRus($month+0)." ".$year."г.</h2>";
+//echo "<h2>Премия за ".$myDate->monthRus($month+0)." ".$year."г.</h2>";
 
 function cmp($a, $b) {
   return $a["sort"] - $b["sort"];
@@ -85,7 +85,7 @@ $_SESSION['descr'] = '';
 
 
 
-$query = "SELECT n.name,n.id,n.head,n.id_dep,n.weight FROM name AS n ORDER BY weight";
+$query = "SELECT n.name,n.id,n.head,n.id_dep,n.weight FROM name AS n WHERE n.del <> 1 ORDER BY weight";
 $result = $mysqli->query($query); 
 while ($row = $result->fetch_assoc()){
 	$specs[] = $row;
@@ -311,11 +311,11 @@ foreach($ctrl as $key=>$value){
 </form>
 <?php
 
-if ($closed_premium[0])
-{
-	echo "<h2>Текущий месяц закрыт</h2>";
-}
-else {
-	echo "<input type='submit' name='button1' value='Закрыть расчетный месяц'>";
-}
+//if ($closed_premium[0])
+//{
+	//echo "<h2>Текущий месяц закрыт</h2>";
+//}
+//else {
+	//echo "<input type='submit' name='button1' value='Закрыть расчетный месяц'>";
+//}
 ?>
