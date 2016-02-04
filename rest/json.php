@@ -2,9 +2,9 @@
 
 <?php
 header('Content-type: text/html; charset=utf-8');
-include('bd.php');
-include('date.php');
-include('const.php');
+include($_SERVER['DOCUMENT_ROOT'].'/bd.php');
+include($_SERVER['DOCUMENT_ROOT'].'/date.php');
+include($_SERVER['DOCUMENT_ROOT'].'/const.php');
 ?>
 
 
@@ -15,9 +15,9 @@ $myDate = new mDate();
 $array_week = $myDate->createArrayWeek();
 $monday = $myDate->reverseDate($array_week[0]);
 $saturday = $myDate->reverseDate($array_week[5]);
+$id = $_GET['id'];
 
-
-$query="SELECT name,id FROM name WHERE `show_plan`='1' AND `del`<>1 ORDER BY `weight` ";
+$query="SELECT name,id FROM name WHERE `id`='$id' AND `del`<>1 ";
 $res = $mysqli->query($query);
 while ($ruk = $res->fetch_assoc()){
 	$ruks[] = $ruk;
@@ -74,14 +74,15 @@ foreach ($ruks as $row){
 			if($row2['responsible'] == ""){
 				$row2['responsible'] = null;
 			}
-
+			if ($arrayDescr != null){
+				array_push($plan['ruks'], $arrayDescr);
+			}
+			$arrayDescr = "";
 		}
-		if ($arrayDescr != null){
-			array_push($plan['ruks'], $arrayDescr);
-		}
+		
 		//$plan2[$row['name']][$day]=$arrayDescr; 
 		//array_push($arrayDates, $arrayDescr);
-		$arrayDescr = "";
+		
 		//array_push($arrayDates,"day" $day)
 		//$plan2[$row['id']]['day'] = $day;
 		//$plan2[$row['id']]['date'] = $arrayDescr;

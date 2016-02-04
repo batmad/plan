@@ -77,6 +77,23 @@ foreach($array_week as $day){
 	$plan[$aktzal][$day]['descr']=$descr;
 	$plan[$aktzal][$day]['id_name'] = $row['id'];
 	$plan[$aktzal][$day]['date'] = $day;
+	
+	$descr = null;
+	$query_todos_place = "SELECT t.descr,t.id,DATE_FORMAT(t.date, '%H:%i') AS hours, p.name AS place FROM todo_place AS t LEFT JOIN place AS p ON (t.place_id = p.id) WHERE `t`.`date` BETWEEN '$dayBegin' AND '$dayEnd' ORDER BY `t`.`date`";
+	$result_todo_place = $mysqli->query($query_todos_place);
+	while($row_place = $result_todo_place->fetch_assoc()){
+		if($row_place['hours'] == "00:00"){
+			$row_place['hours'] = null;
+		}
+
+		if($descr != null){
+			$descr =$descr." <hr/> <b>".$row_place['hours']."</b> ".nl2br($row_place['descr'])." <br/><a href=\"editform.php?id=".$row_place['id']."&nextweek=".$nextweek."\"><img src='/img/edit.png' title='Редактировать'></a>";
+		}
+		else{
+			$descr =$descr."<b valign=top>".$row_place['hours']."</b> ".nl2br($row_place['descr'])." <br/><a href=\"editform.php?id=".$row_place['id']."&nextweek=".$nextweek."\"><img src='/img/edit.png' title='Редактировать'></a>";
+		}
+	}
+	
 }
 
 foreach ($rows as $row){
@@ -141,11 +158,11 @@ foreach ($ruks as $ruk){
 	if($ruk == $aktzal){
 		foreach($plan[$aktzal] as $key => $todo){
 			if ($current_date == $key){
-				echo "<td width='320' valign='top' bgcolor='#CBFCED' >".$todo['descr']."<hr/></td>";
+				echo "<td width='320' valign='top' bgcolor='#CBFCED' >".$todo['descr']."<hr/><a href=\"/admin/addform.php?id=".$todo['id_name']."&date=".$todo['date']."&nextweek=".$nextweek."\"><img src='/img/add.png' title='Добавить'></a></td>";
 			}
 			else {
-				echo "<td width='320' valign='top'>".$todo['descr']."<hr/></td>";
-			}		
+				echo "<td width='320' valign='top'>".$todo['descr']."<hr/><a href=\"/admin/addform.php?id=".$todo['id_name']."&date=".$todo['date']."&nextweek=".$nextweek."\"><img src='/img/add.png' title='Добавить'></a></td>";
+			}
 		}
 	}
 	else{
