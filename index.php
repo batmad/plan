@@ -22,6 +22,7 @@ echo "<td><a href='/plist.php'><img src='/img/factory.png' title='Подведо
 echo "<td/><a href='/admin/word.php'><img src='/img/word.png' title='Скачать план работы'></a></td>";
 echo "<td/><a href='/control.php'><img src='/img/ctrl.png' title='Контроль'></a></td>";
 echo "<td/><a href='/vote/index.php'><img src='/img/vote.jpg' title='Голосование'></a></td>";
+echo "<td/><a href='/rest/plan.apk'><img src='/img/android.png' title='Приложение Android'></a></td>";
 echo "<td><img src='/img/logo.png' width=45 title='Логотип МинЖКХ'></td>";
 echo "</tr></table>";
 
